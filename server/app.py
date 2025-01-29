@@ -273,12 +273,11 @@ class WeightLogResource(Resource):
 
     def post(self):
         data = request.get_json()
-        # Check if the user_id exists
         user = User.query.get(data['user_id'])
         if not user:
             return make_response({"error": "Invalid user_id"}, 400)
         
-        date = datetime.strptime(data['date'], '%Y-%m-%d').date()  # Convert string to date object
+        date = datetime.strptime(data['date'], '%Y-%m-%d').date() 
         new_weight_log = WeightLog(
             user_id=data['user_id'],
             date=date,

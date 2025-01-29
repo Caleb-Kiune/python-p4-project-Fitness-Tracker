@@ -4,7 +4,7 @@ from sqlalchemy.ext.associationproxy import association_proxy
 
 from config import db
 
-# Models go here!
+
 
 # Models go here!
 
@@ -39,24 +39,28 @@ class Workout(db.Model, SerializerMixin):
     __tablename__ = 'workout'
 
     id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)  
     name = db.Column(db.String(80), nullable=False)
     duration = db.Column(db.Integer)
-    diet_id = db.Column(db.Integer, db.ForeignKey('diet.id'), nullable=False)
+    diet_id = db.Column(db.Integer, db.ForeignKey('diet.id'), nullable=True)
 
     exercises = db.relationship('Exercise', backref='workout', lazy=True, cascade='all, delete-orphan')
 
     def to_dict(self):
         return {
             'id': self.id,
+            'user_id': self.user_id,  
             'name': self.name,
             'duration': self.duration,
             'diet_id': self.diet_id,
         }
 
+
 class Exercise(db.Model, SerializerMixin):
     __tablename__ = 'exercise'
 
     id = db.Column(db.Integer, primary_key=True)
+    workout_id = db.Column(db.Integer, db.ForeignKey('workout.id'), nullable=False)  
     name = db.Column(db.String(80), nullable=False)
     weight = db.Column(db.String(10))
     sets = db.Column(db.String(10))
@@ -67,11 +71,13 @@ class Exercise(db.Model, SerializerMixin):
     def to_dict(self):
         return {
             'id': self.id,
+            'workout_id': self.workout_id,  
             'name': self.name,
             'weight': self.weight,
             'sets': self.sets,
             'reps': self.reps,
         }
+
 
     
     
