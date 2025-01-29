@@ -20,9 +20,8 @@ class User(db.Model, SerializerMixin):
     height = db.Column(db.String(10))
     profile_picture = db.Column(db.String(200))
 
-    workouts = db.relationship('Workout', backref='user', lazy=True)
-    weight_logs = db.relationship('WeightLog', backref='user', lazy=True)
-    training_logs = db.relationship('TrainingLog', backref='user', lazy=True)
+    weight_logs = db.relationship('WeightLog', backref='user', lazy=True, cascade='all, delete-orphan')
+    training_logs = db.relationship('TrainingLog', backref='user', lazy=True, cascade='all, delete-orphan')
 
     def to_dict(self):
         return {
@@ -42,9 +41,9 @@ class Workout(db.Model, SerializerMixin):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(80), nullable=False)
     duration = db.Column(db.Integer)
-    diet_id = db.Column(db.Integer, db.ForeignKey('diet.id'))
+    diet_id = db.Column(db.Integer, db.ForeignKey('diet.id'), nullable=False)
 
-    exercises = db.relationship('Exercise', backref='workout', lazy=True)
+    exercises = db.relationship('Exercise', backref='workout', lazy=True, cascade='all, delete-orphan')
 
     def to_dict(self):
         return {
@@ -63,7 +62,7 @@ class Exercise(db.Model, SerializerMixin):
     sets = db.Column(db.String(10))
     reps = db.Column(db.String(10))
 
-    training_logs = db.relationship('TrainingLog', backref='exercise', lazy=True)
+    training_logs = db.relationship('TrainingLog', backref='exercise', lazy=True, cascade='all, delete-orphan')
 
     def to_dict(self):
         return {
@@ -73,8 +72,9 @@ class Exercise(db.Model, SerializerMixin):
             'sets': self.sets,
             'reps': self.reps,
         }
-    
 
+    
+    
 class TrainingLog(db.Model, SerializerMixin):
     __tablename__ = 'training_log'
 
@@ -93,19 +93,21 @@ class TrainingLog(db.Model, SerializerMixin):
             'date': self.date,
         }
 
+
 class Diet(db.Model, SerializerMixin):
     __tablename__ = 'diet'
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(80), nullable=False)
 
-    workouts = db.relationship('Workout', backref='diet', lazy=True)
+    workouts = db.relationship('Workout', backref='diet', lazy=True, cascade='all, delete-orphan')
 
     def to_dict(self):
         return {
             'id': self.id,
             'name': self.name,
         }
+
 
 class WeightLog(db.Model, SerializerMixin):
     __tablename__ = 'weight_log'
@@ -124,3 +126,4 @@ class WeightLog(db.Model, SerializerMixin):
             'weight': self.weight,
             'notes': self.notes,
         }
+
