@@ -6,6 +6,8 @@ from config import db
 
 # Models go here!
 
+# Models go here!
+
 class User(db.Model, SerializerMixin):
     __tablename__ = 'user'
 
@@ -22,6 +24,18 @@ class User(db.Model, SerializerMixin):
     weight_logs = db.relationship('WeightLog', backref='user', lazy=True)
     training_logs = db.relationship('TrainingLog', backref='user', lazy=True)
 
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'username': self.username,
+            'age': self.age,
+            'gender': self.gender,
+            'current_weight': self.current_weight,
+            'target_weight': self.target_weight,
+            'height': self.height,
+            'profile_picture': self.profile_picture,
+        }
+
 class Workout(db.Model, SerializerMixin):
     __tablename__ = 'workout'
 
@@ -32,6 +46,15 @@ class Workout(db.Model, SerializerMixin):
     diet_id = db.Column(db.Integer, db.ForeignKey('diet.id'))
 
     exercises = db.relationship('Exercise', backref='workout', lazy=True)
+
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'user_id': self.user_id,
+            'name': self.name,
+            'duration': self.duration,
+            'diet_id': self.diet_id,
+        }
 
 class Exercise(db.Model, SerializerMixin):
     __tablename__ = 'exercise'
@@ -45,6 +68,16 @@ class Exercise(db.Model, SerializerMixin):
 
     training_logs = db.relationship('TrainingLog', backref='exercise', lazy=True)
 
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'workout_id': self.workout_id,
+            'name': self.name,
+            'weight': self.weight,
+            'sets': self.sets,
+            'reps': self.reps,
+        }
+
 class TrainingLog(db.Model, SerializerMixin):
     __tablename__ = 'training_log'
 
@@ -54,6 +87,15 @@ class TrainingLog(db.Model, SerializerMixin):
     workout_id = db.Column(db.Integer, db.ForeignKey('workout.id'), nullable=False)
     date = db.Column(db.String(10), nullable=False)
 
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'user_id': self.user_id,
+            'exercise_id': self.exercise_id,
+            'workout_id': self.workout_id,
+            'date': self.date,
+        }
+
 class Diet(db.Model, SerializerMixin):
     __tablename__ = 'diet'
 
@@ -61,6 +103,12 @@ class Diet(db.Model, SerializerMixin):
     name = db.Column(db.String(80), nullable=False)
 
     workouts = db.relationship('Workout', backref='diet', lazy=True)
+
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'name': self.name,
+        }
 
 class WeightLog(db.Model, SerializerMixin):
     __tablename__ = 'weight_log'
@@ -70,3 +118,12 @@ class WeightLog(db.Model, SerializerMixin):
     date = db.Column(db.Date, nullable=False)
     weight = db.Column(db.Float, nullable=False)
     notes = db.Column(db.String(200))
+
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'user_id': self.user_id,
+            'date': self.date,
+            'weight': self.weight,
+            'notes': self.notes,
+        }
