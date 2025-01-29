@@ -19,7 +19,8 @@ class User(db.Model, SerializerMixin):
     profile_picture = db.Column(db.String(200))
 
     workouts = db.relationship('Workout', backref='user', lazy=True)
-    user_exercises = db.relationship('UserExercise', backref='user', lazy=True)
+    weight_logs = db.relationship('WeightLog', backref='user', lazy=True)
+    training_logs = db.relationship('TrainingLog', backref='user', lazy=True)
 
 class Workout(db.Model, SerializerMixin):
     __tablename__ = 'workout'
@@ -27,8 +28,8 @@ class Workout(db.Model, SerializerMixin):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     name = db.Column(db.String(80), nullable=False)
-    date = db.Column(db.Date)
     duration = db.Column(db.Integer)
+    diet_id = db.Column(db.Integer, db.ForeignKey('diet.id'))
 
     exercises = db.relationship('Exercise', backref='workout', lazy=True)
 
@@ -42,12 +43,30 @@ class Exercise(db.Model, SerializerMixin):
     sets = db.Column(db.String(10))
     reps = db.Column(db.String(10))
 
-    user_exercises = db.relationship('UserExercise', backref='exercise', lazy=True)
+    training_logs = db.relationship('TrainingLog', backref='exercise', lazy=True)
 
-class UserExercise(db.Model, SerializerMixin):
-    __tablename__ = 'user_exercise'
+class TrainingLog(db.Model, SerializerMixin):
+    __tablename__ = 'training_log'
 
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     exercise_id = db.Column(db.Integer, db.ForeignKey('exercise.id'), nullable=False)
+    workout_id = db.Column(db.Integer, db.ForeignKey('workout.id'), nullable=False)
+    date = db.Column(db.String(10), nullable=False)
+
+class Diet(db.Model, SerializerMixin):
+    __tablename__ = 'diet'
+
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(80), nullable=False)
+
+    workouts = db.relationship('Workout', backref='diet', lazy=True)
+
+class WeightLog(db.Model, SerializerMixin):
+    __tablename__ = 'weight_log'
+
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    date = db.Column(db.Date, nullable=False)
+    weight = db.Column(db.Float, nullable=False)
     notes = db.Column(db.String(200))

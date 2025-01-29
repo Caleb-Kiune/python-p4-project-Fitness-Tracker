@@ -10,7 +10,7 @@ from flask_restful import Resource
 
 # Local imports
 from config import app, db, api
-from models import User, Workout, Exercise, UserExercise
+from models import User, Workout, Exercise, TrainingLog, Diet, WeightLog 
 
 # Initialize Flask-Migrate
 migrate = Migrate(app, db)
@@ -20,6 +20,10 @@ migrate = Migrate(app, db)
 @app.route('/')
 def index():
     return '<h1>Welcome to Fitness Tracker</h1>'
+
+
+
+# User model endpoints
 
 class UserResource(Resource):
     def get(self):
@@ -72,6 +76,11 @@ class SingleUserResource(Resource):
 
 api.add_resource(UserResource, '/user')
 api.add_resource(SingleUserResource, '/user/<int:user_id>')
+
+
+# Workout model endpoints
+
+
 
 if __name__ == '__main__':
     app.run(port=5555, debug=True)
