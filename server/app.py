@@ -84,6 +84,11 @@ class WorkoutResource(Resource):
 
     def post(self):
         data = request.get_json()
+        if 'diet_id' in data:
+            diet = Diet.query.get(data['diet_id'])
+            if not diet:
+                return make_response({"error": "Invalid diet_id"}, 400)
+
         new_workout = Workout(
             name=data['name'],
             duration=data.get('duration'),
@@ -93,7 +98,7 @@ class WorkoutResource(Resource):
         db.session.commit()
 
         return make_response(new_workout.to_dict(), 201)
-
+    
 class SingleWorkoutResource(Resource):
     def get(self, workout_id):
         workout = Workout.query.get_or_404(workout_id)
@@ -173,6 +178,11 @@ class ExerciseWorkoutResource(Resource):
 
     def post(self):
         data = request.get_json()
+        exercise = Exercise.query.get(data['exercise_id'])
+        workout = Workout.query.get(data['workout_id'])
+        if not exercise or not workout:
+            return make_response({"error": "Invalid exercise_id or workout_id"}, 400)
+
         new_exercise_workout = ExerciseWorkout(
             exercise_id=data['exercise_id'],
             workout_id=data['workout_id'],
@@ -181,7 +191,7 @@ class ExerciseWorkoutResource(Resource):
         db.session.add(new_exercise_workout)
         db.session.commit()
         return make_response(new_exercise_workout.to_dict(), 201)
-
+    
 class SingleExerciseWorkoutResource(Resource):
     def get(self, exercise_workout_id):
         exercise_workout = ExerciseWorkout.query.get_or_404(exercise_workout_id)
@@ -207,7 +217,6 @@ class SingleExerciseWorkoutResource(Resource):
 api.add_resource(ExerciseWorkoutResource, '/exercise_workout')
 api.add_resource(SingleExerciseWorkoutResource, '/exercise_workout/<int:exercise_workout_id>')
 
-# UserWorkoutLog model endpoints
 class UserWorkoutLogResource(Resource):
     def get(self):
         user_workout_logs = UserWorkoutLog.query.all()
@@ -216,6 +225,11 @@ class UserWorkoutLogResource(Resource):
 
     def post(self):
         data = request.get_json()
+        user = User.query.get(data['user_id'])
+        workout = Workout.query.get(data['workout_id'])
+        if not user or not workout:
+            return make_response({"error": "Invalid user_id or workout_id"}, 400)
+        
         new_user_workout_log = UserWorkoutLog(
             user_id=data['user_id'],
             workout_id=data['workout_id'],
@@ -251,7 +265,6 @@ class SingleUserWorkoutLogResource(Resource):
 
 api.add_resource(UserWorkoutLogResource, '/user_workout_log')
 api.add_resource(SingleUserWorkoutLogResource, '/user_workout_log/<int:user_workout_log_id>')
-
 
 # Diet model endpoints
 class DietResource(Resource):
