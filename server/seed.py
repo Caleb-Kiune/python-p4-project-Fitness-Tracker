@@ -104,7 +104,7 @@ if __name__ == '__main__':
                 weight_log = WeightLog(
                     user=user,
                     date=fake.date_this_year(),
-                    weight=uniform(50.0, 100.0),  # Use uniform to generate float numbers
+                    weight=uniform(50.0, 100.0),  
                     notes=fake.sentence()
                 )
                 weight_logs.append(weight_log)
