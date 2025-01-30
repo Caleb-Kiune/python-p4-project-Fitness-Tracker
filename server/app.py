@@ -8,13 +8,16 @@ from flask_migrate import Migrate
 # Remote library imports
 from flask import request, make_response
 from flask_restful import Resource
-
+from flask_cors import CORS
 # Local imports
 from config import app, db, api
 from models import User, Workout, Exercise, ExerciseWorkout, UserWorkoutLog, Diet, WeightLog, db
 
 # Initialize Flask-Migrate
 migrate = Migrate(app, db)
+
+# Enable CORS
+CORS(app)
 
 # Views go here!
 
