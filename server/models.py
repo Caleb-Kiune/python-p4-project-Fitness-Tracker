@@ -62,6 +62,9 @@ class Exercise(db.Model, SerializerMixin):
     weight = db.Column(db.String(10))
     sets = db.Column(db.String(10))
     reps = db.Column(db.String(10))
+    category = db.Column(db.String(20), nullable=False, default='Chest')
+    day = db.Column(db.String(10), nullable=False, default='Monday')
+    completed = db.Column(db.Boolean, nullable=False, default=False)  # Add this line
 
     exercise_workouts = db.relationship('ExerciseWorkout', backref='exercise', lazy=True, cascade='all, delete-orphan')
 
@@ -72,7 +75,12 @@ class Exercise(db.Model, SerializerMixin):
             'weight': self.weight,
             'sets': self.sets,
             'reps': self.reps,
+            'category': self.category,
+            'day': self.day,
+            'completed': self.completed  
         }
+
+
 
 
 class ExerciseWorkout(db.Model, SerializerMixin):

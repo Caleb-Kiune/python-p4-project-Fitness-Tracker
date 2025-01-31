@@ -1,0 +1,74 @@
+{
+  "workouts": [
+    {
+      "id": "1",
+      "name": "Bench Press",
+      "sets": "4",
+      "reps": "10",
+      "weight": "60",
+      "category": "Chest",
+      "day": "Monday",
+      "completed": true
+    },
+    {
+      "id": "2",
+      "name": "Squat",
+      "sets": "4",
+      "reps": "12",
+      "weight": "80",
+      "category": "Legs",
+      "day": "Saturday",
+      "completed": true
+    },
+    {
+      "id": "1731524454460",
+      "name": "Deadlift",
+      "sets": "4",
+      "reps": "8",
+      "weight": "100",
+      "category": "Legs",
+      "day": "Friday",
+      "completed": true
+    },
+    {
+      "id": "1731524731857",
+      "name": "Lateral raise",
+      "sets": "5",
+      "reps": "5",
+      "weight": "5",
+      "category": "Chest",
+      "day": "Monday",
+      "completed": true
+    },
+    {
+      "id": "1731563054019",
+      "name": "Row",
+      "sets": "4",
+      "reps": "8",
+      "weight": "60",
+      "category": "Back",
+      "day": "Monday",
+      "completed": true
+    },
+    {
+      "id": "1731614616072",
+      "name": "Dumbell press",
+      "sets": "4",
+      "reps": "12",
+      "weight": "40",
+      "category": "Chest",
+      "day": "Wednesday",
+      "completed": true
+    },
+    {
+      "id": "1731614792048",
+      "name": "Shoulder Press",
+      "sets": "4",
+      "reps": "4",
+      "weight": "4",
+      "category": "Shoulders",
+      "day": "Monday",
+      "completed": true
+    }
+  ]
+}

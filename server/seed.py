@@ -1,12 +1,5 @@
-#!/usr/bin/env python3
-
-# Standard library imports
 from random import randint, choice as rc, uniform
-
-# Remote library imports
 from faker import Faker
-
-# Local imports
 from app import app
 from models import db, User, Workout, Exercise, ExerciseWorkout, UserWorkoutLog, Diet, WeightLog
 
@@ -64,7 +57,9 @@ if __name__ == '__main__':
                 name=fake.word(),
                 weight=f"{fake.random_int(min=5, max=50)}kg",
                 sets=fake.random_int(min=1, max=5),
-                reps=fake.random_int(min=5, max=20)
+                reps=fake.random_int(min=5, max=20),
+                category=rc(['Chest', 'Back', 'Legs', 'Arms', 'Shoulders']),
+                day=rc(['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'])
             )
             exercises.append(exercise)
         db.session.add_all(exercises)

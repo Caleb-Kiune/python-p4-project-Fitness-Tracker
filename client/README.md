@@ -1,70 +1,126 @@
-# Getting Started with Create React App
+## **Fitness Tracker**
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## **Author**
+Caleb Kiune
 
-## Available Scripts
+## **Project Overview**
+- Fitness Tracker is a comprehensive web application built with React and json-server that helps users manage and track their fitness routines. This application allows users to create and customize their workouts, view exercise details, update their personal profiles, and generate reports on completed workouts. The application is designed to be user-friendly and responsive, ensuring a seamless experience across various devices.
 
-In the project directory, you can run:
+## **Technologies Used**
+- React - Frontend
 
-### `npm start`
+- json-server - Backend
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+- CSS - Styling
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+- Visual Studio Code - Code Editor
 
-### `npm test`
+- Algobook gym API - External API
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- Google Chrome - Browser
 
-### `npm run build`
+## **Project Features**
+- Custom Workouts: Users can add, edit, and delete custom workouts. Each workout includes details such as the exercise name, sets, reps, weight, category, and the day of the week.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- Exercise Details: Users can search for and view detailed information about various exercises.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+- Profile Management: Users can update their profile with personal details, such as name, age, gender, current weight, target weight, height, and profile picture.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+- Workout Reports: Users can view summaries of their completed workouts, including the date, exercise name, sets, reps, weight, and the day of the week.
 
-### `npm run eject`
+- Responsive Design: The application features a responsive design, ensuring it works well on both desktop and mobile devices.
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+- Workouts by Muscle Group: Users can categorize and view workouts based on different muscle groups. This includes selecting specific categories such as Chest, Back, Legs, Arms, and Shoulders to focus on targeted muscle areas.
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## **Access and Installation**
+- Access the Live Site
+- Navigate to the live site: `https://fitness-tracker-seven-roan.vercel.app/`
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+## **Project Setup Instructions**
+- Clone the Repository:
+- git clone `https://github.com/Caleb-Kiune/Fitness-Tracker.git`
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+- Navigate to the Project Directory:
+- `cd Fitness-Tracker`
 
-## Learn More
+- Install Dependencies:
+ `npm install`
+ `Start the json-server`
+ `npx json-server --watch db.json --port 3001`
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+- Start the React App:
+ `npm start`
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## **Home Page**
+- Access the Home Page
+- Navigate to the home page to find quick links and an     overview of your fitness journey.
 
-### Code Splitting
+## **Workouts**
+- Click on the drop down menu and select to view varoius musle categories.
+- View training routines based on muscle related muscle groups.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+## **Custom Workouts**
+1. Add a Workout:
 
-### Analyzing the Bundle Size
+- Go to the "Custom Workouts" section.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+- Fill in the workout details (name, sets, reps, weight, category, and day).
 
-### Making a Progressive Web App
+- Click the "Add Workout" button to save the new workout.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+2. Edit a Workout:
 
-### Advanced Configuration
+- In the "Custom Workouts" section, find the workout you want to edit.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+- Click the "Edit" button next to the workout.
 
-### Deployment
+- Update the workout details as needed.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+- Click the "Save Changes" button to update the workout.
 
-### `npm run build` fails to minify
+3. Delete a Workout:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+- In the "Custom Workouts" section, find the workout you want to delete.
+
+- Click the "Delete" button next to the workout.
+
+4. Mark as Complete:
+
+- In the "Custom Workouts" section, find the workout you want to mark as complete.
+
+- Click the "Mark as Complete" button.
+
+## **Exercises**
+1. Search Exercises:
+
+- Go to the "Exercises" section.
+
+- Use the search bar to find exercises by name or category.
+
+- Click on highlighted `Details` to view detailed information about each exercise.
+
+## **Profile**
+1. View Profile:
+
+- Go to the "Profile" section to view your personal details.
+
+2. Edit Profile:
+
+- In the "Profile" section, click the "Edit Profile" button.
+
+- Update your personal details (name, age, gender, current weight, target weight, height, email, and profile picture).
+
+- Click the "Save" button to update your profile.
+
+## **Reports**
+1. View Reports:
+
+- Go to the "Reports" section.
+
+- View a summary of all completed workouts, including details such as the date, exercise name, sets, reps, weight, and day.
+
+## **Contributions**
+- All contributions are welcome. Feel free to open an issue or submit a pull request.
+
+## **License**
+- This project is licensed under the MIT License.

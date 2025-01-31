@@ -1,0 +1,746 @@
+:root {
+  --primary-color: #6200ea; /* Bright purple */
+  --secondary-color: #03dac6; /* Bright teal */
+  --background-color: #f5f5f5; /* Light grey background */
+  --font-family: 'Roboto', sans-serif;
+  --button-hover-color: #3700b3; /* Darker purple for hover effect */
+  --text-color: #333; /* Dark text color */
+  --input-background: #fff; /* White input background */
+  --input-border: #ddd; /* Light grey input border */
+  --card-background: #fff; /* White card background */
+  --border-radius: 8px;
+  --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+body {
+  font-family: var(--font-family);
+  background-color: var(--background-color);
+  color: var(--text-color);
+  margin: 0;
+  padding: 0;
+}
+
+header {
+  background-color: var(--primary-color);
+  color: white;
+  padding: 1em;
+  text-align: center;
+}
+
+nav ul {
+  list-style: none;
+  padding: 0;
+}
+
+nav ul li {
+  display: inline;
+  margin-right: 1em;
+}
+
+nav ul li a {
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.container {
+  padding: 1em;
+}
+
+form {
+  background-color: var(--card-background);
+  padding: 2em;
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
+  max-width: 400px;
+  margin: 2em auto;
+}
+
+input[type="text"], input[type="number"] {
+  width: 100%;
+  padding: 0.5em;
+  margin-bottom: 1em;
+  background-color: var(--input-background);
+  border: 1px solid var(--input-border);
+  border-radius: var(--border-radius);
+}
+
+button[type="submit"] {
+  background-color: var(--primary-color);
+  color: white;
+  padding: 0.5em 1em;
+  border: none;
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  font-size: 1em;
+  transition: background-color 0.3s;
+}
+
+button[type="submit"]:hover {
+  background-color: var(--button-hover-color);
+}
+
+.workouts ul {
+  padding: 0;
+  list-style: none;
+}
+
+.workouts li {
+  background-color: var(--card-background);
+  padding: 1em;
+  margin-bottom: 1em;
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
+}
+
+.home {
+  text-align: center;
+  padding: 2em;
+}
+
+.quick-links, .overview, .motivational-quote {
+  margin-top: 2em;
+}
+
+.quick-links ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.quick-links ul li {
+  display: inline;
+  margin-right: 1em;
+}
+
+.quick-links ul li a {
+  color: var(--primary-color);
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.motivational-quote p {
+  font-style: italic;
+  color: #555;
+}
+
+.workouts {
+  padding: 1em;
+  background-color: var(--card-background);
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
+  margin-bottom: 1em;
+}
+
+.workouts h2 {
+  color: var(--primary-color);
+  text-align: center;
+}
+
+.workout-cards {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+.workout-card {
+  background-color: var(--card-background);
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
+  margin: 1em;
+  padding: 1em;
+  width: 200px;
+  text-align: center;
+  transition: transform 0.2s;
+  cursor: pointer;
+}
+
+.workout-card:hover {
+  transform: scale(1.05);
+}
+
+.workout-card.completed {
+  background-color: #e0f7fa; /* Light teal for completed workouts */
+  border-left: 4px solid #03dac6;
+}
+
+.workout-card h3 {
+  color: var(--primary-color);
+}
+
+.workout-card p {
+  margin: 0.5em 0;
+}
+
+.workout-card input {
+  width: 100%;
+  padding: 0.2em;
+  background-color: var(--input-background);
+  border: 1px solid var(--input-border);
+  border-radius: var(--border-radius);
+}
+
+.checkmark {
+  color: #03dac6;
+  font-size: 1.5em;
+}
+
+.exercise-details {
+  background-color: var(--card-background);
+  padding: 1em;
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
+  margin-top: 1em;
+  text-align: center;
+}
+
+.search-form {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1em;
+}
+
+.search-input {
+  width: 70%;
+  padding: 0.5em;
+  margin-right: 0.5em;
+  background-color: var(--input-background);
+  border: 1px solid var(--input-border);
+  border-radius: var(--border-radius);
+}
+
+.search-button {
+  background-color: var(--primary-color);
+  color: white;
+  padding: 0.5em 1em;
+  border: none;
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  font-size: 1em;
+  transition: background-color 0.3s;
+}
+
+.search-button:hover {
+  background-color: var(--button-hover-color);
+}
+
+.exercise-list {
+  margin-top: 1em;
+}
+
+.exercise-item {
+  background-color: var(--card-background);
+  padding: 1em;
+  margin: 0.5em 0;
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.exercise-item:hover {
+  transform: scale(1.05);
+}
+
+.exercise-item p {
+  margin: 0;
+}
+
+.exercise-item a {
+  margin-left: 10px;
+  color: var(--primary-color);
+  text-decoration: none;
+}
+
+.exercise-item a:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+  .workout-cards {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .workout-card {
+    width: 100%;
+    margin-bottom: 1em;
+  }
+}
+
+.profile {
+  background-color: var(--card-background);
+  padding: 2em;
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
+  max-width: 400px;
+  margin: 2em auto;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.custom-workouts-form .success {
+  color: green;
+  margin-bottom: 1em;
+}
+
+.workout-card.completed {
+  background-color: #e0f7fa; /* Light teal for completed workouts */
+  border-left: 4px solid #03dac6;
+}
+
+.workout-card .checkmark {
+  color: #03dac6;
+  font-size: 1.5em;
+}
+
+.custom-workouts-form {
+  background-color:rgba(0, 0, 0, 0.489);
+  padding: 2em;
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
+  max-width: 800px; /* Adjusted to fit inputs side by side */
+  margin: 2em auto;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.custom-workouts-form .form-row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.custom-workouts-form input,
+.custom-workouts-form select,
+.custom-workouts-form button {
+  flex: 1;
+  margin: 0.5em;
+}
+
+.custom-workouts-form input[type="text"], 
+.custom-workouts-form input[type="number"], 
+.custom-workouts-form select {
+  width: calc(20% - 1em); /* Adjusted to fit multiple inputs */
+  padding: 0.5em;
+  background-color: var(--input-background);
+  border: 1px solid var(--input-border);
+  border-radius: var(--border-radius);
+}
+
+.custom-workouts-form button {
+  background-color: var(--primary-color);
+  color: white;
+  padding: 0.5em 1em;
+  border: none;
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  font-size: 1em;
+  transition: background-color 0.3s;
+}
+
+.custom-workouts-form button:hover {
+  background-color: var(--button-hover-color);
+}
+
+.custom-workouts-form .error {
+  color: red;
+  margin-bottom: 1em;
+}
+
+.custom-workouts-form .success {
+  color: green;
+  margin-bottom: 1em;
+}
+
+.workout-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.workout-card {
+  background-color: var(--card-background);
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
+  padding: 16px;
+  width: 200px;
+  text-align: center;
+  transition: transform 0.2s;
+}
+
+.workout-card:hover {
+  transform: scale(1.05);
+}
+
+.workout-card h4 {
+  color: var(--primary-color);
+  margin-bottom: 8px;
+}
+
+.workout-card p {
+  margin: 4px 0;
+}
+
+.workout-card.completed {
+  background-color: #e0f7fa; /* Light teal for completed workouts */
+  border-left: 4px solid #03dac6;
+}
+
+.workout-card .checkmark {
+  color: #03dac6;
+  font-size: 1.5em;
+}
+
+.home {
+  text-align: center;
+  padding: 2em;
+  background-image: url('/public/pexels-leonardho-1552242.jpg'); /* Path to your background image */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  color: white; /* Adjust text color to ensure it's readable */
+  min-height: 100vh; /* Ensure it covers the full viewport height */
+  margin: 0;
+  width: 100%;
+}
+
+/* Optional: Add a semi-transparent background to text areas for better readability */
+.quick-links, .overview, .motivational-quote {
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+  padding: 1em;
+  border-radius: var(--border-radius);
+}
+
+.workouts {
+  padding: 1em;
+  background-image: url('/public/pexels-leonardho-1552252.jpg'); /* Path to your background image */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  color: rgb(12, 0, 0); /* Ensure text is readable */
+  min-height: 100vh; /* Ensure it covers the full viewport height */
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
+}
+
+.workout-cards {
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background for workout cards */
+  border-radius: var(--border-radius);
+  padding: 1em;
+}
+
+.custom-workouts-container {
+  background-image: url('/public/pexels-victorfreitas-841131.jpg'); /* Path to your background image */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  color: white; /* Ensure text is readable */
+  min-height: 100vh; /* Ensure it covers the full viewport height */
+  padding: 2em;
+}
+
+/* Optional: Add a semi-transparent background to form rows for better readability */
+.custom-workouts-form .form-row {
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+  border-radius: var(--border-radius);
+  padding: 1em;
+}
+
+.details-container {
+  background-image: url('/public/pexels-anush-1229356.jpg'); /* Path to your background image */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  color: white; /* Ensure text is readable */
+  min-height: 100vh; /* Ensure it covers the full viewport height */
+  padding: 2em;
+}
+
+/* Optional: Add a semi-transparent background to list items for better readability */
+.exercise-list .exercise-item {
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+  border-radius: var(--border-radius);
+  padding: 1em;
+}
+
+.report-container {
+  background-image: url('/public/pexels-pixabay-163351.jpg'); /* Path to your background image */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  color: white; /* Ensure text is readable */
+  min-height: 100vh; /* Ensure it covers the full viewport height */
+  padding: 2em;
+}
+
+/* Optional: Add a semi-transparent background to list items for better readability */
+.report-summary {
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+  border-radius: var(--border-radius);
+  padding: 1em;
+}
+
+.profile-container {
+  background-image: url('/public/hans-isaacson-iEKg9h5_hd4-unsplash.jpg'); /* Path to your background image */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  color: white; /* Ensure text is readable */
+  min-height: 100vh; /* Ensure it covers the full viewport height */
+  padding: 2em;
+}
+
+/* Optional: Add a semi-transparent background to profile details for better readability */
+.profile {
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+  border-radius: var(--border-radius);
+  padding: 2em;
+  max-width: 400px;
+  margin: 2em auto;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+body {
+  font-family: var(--font-family);
+  background-image: url('/public/hans-isaacson-iEKg9h5_hd4-unsplash.jpg'); /* Path to your background image */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  color: var(--text-color);
+  margin: 0;
+  padding: 0;
+  min-height: 100vh; /* Ensure it covers the full viewport height */
+  width: 100%; /* Ensure it covers the full width */
+}
+
+/* Styles for category selection button */
+.category-button {
+  background-color: #4dd0e1; /* Lighter teal for contrast */
+  color: black; /* Dark text for readability */
+  padding: 0.5em 1em;
+  border: none;
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  font-size: 1em;
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+/* Hover effect for better user experience */
+.category-button:hover {
+  background-color: #00acc1; /* Slightly darker teal on hover */
+  color: white; /* White text on hover */
+  transform: scale(1.05); /* Slightly enlarges the button */
+}
+
+/* Styles for the heading "Workouts by Muscle Group" */
+.workouts-heading {
+  color: white; /* Bright gold color */
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0); /* Add a subtle shadow for contrast */
+  font-size: 2em; /* Adjust size as needed */
+  font-weight: bold; /* Make the text bold */
+  margin-bottom: 0.5em; /* Space below the heading */
+}
+
+
+
+
+
+/* Styles for custom workout cards */
+.custom-workout-card {
+  background-color: rgba(255, 255, 255, 0.8); /* Semi-transparent white background for readability */
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
+  margin: 1em;
+  padding: 1em;
+  width: 200px;
+  text-align: center;
+  transition: transform 0.2s, box-shadow 0.2s;
+  color: var(--text-color); /* Ensure text color is readable */
+}
+
+.custom-workout-card:hover {
+  transform: scale(1.05); /* Slightly enlarge the card on hover */
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15); /* Increase shadow on hover */
+}
+
+.custom-workout-card.completed {
+  background-color: rgba(124, 194, 203, 0.8); /* Light teal for completed workouts */
+  border-left: 4px solid #03dac6; /* Teal border for visual distinction */
+}
+
+.custom-workout-card h3 {
+  color: var(--primary-color);
+  margin-bottom: 0.5em;
+}
+
+.custom-workout-card p {
+  margin: 0.5em 0;
+}
+
+/* Styles for buttons inside workout cards */
+.custom-workout-card button {
+  background-color: var(--secondary-color);
+  color: white;
+  padding: 0.5em 1em;
+  border: none;
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  font-size: 1em;
+  margin-top: 0.5em;
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+.custom-workout-card button:hover {
+  background-color: var(--button-hover-color);
+  transform: scale(1.05);
+}
+
+
+
+.report-container {
+  background-color: var(--card-background);
+  padding: 2em;
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
+  max-width: 800px;
+  margin: 2em auto;
+  text-align: center;
+}
+
+.report-summary {
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+  padding: 1em;
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
+  color: white;
+}
+
+.report-summary h2 {
+  color: var(--primary-color);
+  margin-bottom: 1em;
+}
+
+.report-item {
+  background-color: rgba(128, 128, 128, 0.242);
+  padding: 1em;
+  margin: 0.5em 0;
+  border-radius: var(--border-radius);
+  box-shadow: black;
+  color: white;
+  text-align: left;
+}
+
+.report-item span {
+  font-weight: bold;
+  color: var(--secondary-color);
+}
+
+
+
+
+/* App.css */
+
+/* Form styles */
+/* Form styles */
+#user-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#user-form input {
+  width: 300px; 
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 4px;
+  border: 1px solid #ddd;
+}
+
+#add-user-button {
+  width: 300px;
+  padding: 10px;
+  color: #fff;
+  background-color: #007bff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+#add-user-button:hover {
+  background-color: #0056b3;
+}
+
+#user-list {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.user-card {
+  background-color: #f9f9f9;
+  margin: 10px;
+  padding: 10px;
+  border-radius: 4px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  max-width: 300px;
+}
+
+.user-card-img {
+  width: 100%;
+  height: auto;
+  border-radius: 4px;
+  margin-bottom: 10px;
+}
+
+.user-card-info {
+  text-align: center;
+}
+
+.edit-button {
+  width: auto;
+  margin: 5px;
+  padding: 5px 10px;
+  background-color: #0056b3;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.delete-button {
+  width: auto;
+  margin: 5px;
+  padding: 5px 10px;
+  background-color: #dc3545;
+  border: none;
+  border-radius: 4px;
+}
+
+.edit-button:hover {
+  background-color: #004085;
+}
+
+.delete-button:hover {
+  background-color: #c82333;
+}
+
+
+
+
+
+
+

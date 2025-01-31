@@ -182,7 +182,10 @@ class ExerciseResource(Resource):
             name=data['name'],
             weight=data.get('weight'),
             sets=data.get('sets'),
-            reps=data.get('reps')
+            reps=data.get('reps'),
+            category=data.get('category', 'Chest'),
+            day=data.get('day', 'Monday'),
+            completed=data.get('completed', False)  
         )
         db.session.add(new_exercise)
         db.session.commit()
@@ -201,6 +204,9 @@ class SingleExerciseResource(Resource):
         exercise.weight = data.get('weight', exercise.weight)
         exercise.sets = data.get('sets', exercise.sets)
         exercise.reps = data.get('reps', exercise.reps)
+        exercise.category = data.get('category', exercise.category)
+        exercise.day = data.get('day', exercise.day)
+        exercise.completed = data.get('completed', exercise.completed)  # Handle the completed field
 
         db.session.commit()
         return make_response(exercise.to_dict(), 200)
@@ -210,6 +216,7 @@ class SingleExerciseResource(Resource):
         db.session.delete(exercise)
         db.session.commit()
         return make_response({"message": "Exercise deleted successfully"}, 200)
+
 
 class ExerciseWorkoutsResource(Resource):
     def get(self, exercise_id):
