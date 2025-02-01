@@ -1,6 +1,6 @@
 /* Login Container */
 .login-container {
-  background-color: rgba(255, 255, 255, 0.5); /* Adjusted transparency to 50% */
+  background-color: rgba(0, 0, 0, 0.5); /* Adjusted transparency to 50% black */
   padding: 2.5em; /* Increased padding for better spacing */
   border-radius: 10px;
   box-shadow: 0 6px 10px rgba(0, 0, 0, 0.1); /* Subtle increase in box shadow */
@@ -57,16 +57,17 @@
   width: 100%;
   padding: 0.75em;
   margin-bottom: 1em;
-  background-color: #f9f9f9;
-  border: 1px solid #ddd;
+  background-color: rgba(0, 0, 0, 0.1); /* Light shade of black for inputs */
+  border: 1px solid rgba(0, 0, 0, 0.3); /* Light border shade */
   border-radius: 10px;
+  color: black; /* Ensure text is readable */
   transition: border-color 0.3s, box-shadow 0.3s;
 }
 
 .login-form input:focus {
-  border-color: var(--primary-color); /* Added focus color */
+  border-color: rgba(98, 0, 234, 0.8); /* Added focus color */
   outline: none;
-  box-shadow: 0 0 5px rgba(98, 0, 234, 0.3); /* Added focus shadow */
+  box-shadow: 0 0 5px rgba(98, 0, 234, 0.5); /* Added focus shadow */
 }
 
 .login-form button {

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import '../styles/Workouts.css';
 
 function Workouts() {
@@ -35,6 +35,13 @@ function Workouts() {
     Arms: ['Balanced Diet', 'High Protein Diet'],
     Shoulders: ['High Protein Diet', 'Low Fat Diet']
   };
+
+  useEffect(() => {
+    // Add 'appear' class to all cards when they are rendered
+    document.querySelectorAll('.card').forEach(card => {
+      card.classList.add('appear');
+    });
+  }, [selectedGroup, workouts]);
 
   const getWorkoutsByCategory = (category) => {
     return workouts.filter(workout => workout.category === category).slice(0, 4);

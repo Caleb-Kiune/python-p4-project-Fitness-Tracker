@@ -23,11 +23,11 @@
 .card {
   flex: 1;
   background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
-  padding: 1em;
+  padding: 1.5em; /* Increase padding for better spacing */
   border-radius: var(--border-radius);
-  box-shadow: var (--box-shadow);
+  box-shadow: var(--box-shadow); /* Corrected typo */
   color: white;
-  margin: 1em;
+  margin: 1.5em; /* Increase margin for better spacing */
   min-width: 200px; /* Ensure cards have a minimum width */
   max-width: 300px; /* Ensure cards have a maximum width */
 }
@@ -39,16 +39,12 @@
   margin-bottom: 1em;
 }
 
-.report-summary h2 {
-  display: none; /* Hide original h2 tags */
-}
-
 .report-item {
   background-color: rgba(128, 128, 128, 0.242); /* Light grey for readability */
   padding: 1em;
   margin: 0.5em 0;
   border-radius: var(--border-radius);
-  box-shadow: black;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow for better spacing */
   color: white;
   text-align: left;
 }
@@ -56,4 +52,10 @@
 .report-item span {
   font-weight: bold;
   color: var(--secondary-color);
+}
+
+.error {
+  color: red;
+  font-size: 1.2em;
+  margin-bottom: 1em;
 }

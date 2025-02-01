@@ -165,7 +165,7 @@ function CustomWorkouts() {
       </form>
 
       <div className="workout-list">
-        <h3>Exercises</h3>
+        
         {workoutList.map((workout, index) => (
           <div key={index} className={`exercise-item ${workout.completed ? 'completed' : ''}`}>
             <div className="content-item">

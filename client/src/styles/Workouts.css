@@ -12,11 +12,12 @@
   border-radius: var(--border-radius);
   box-shadow: var(--box-shadow);
   margin-bottom: 1em;
+  margin-top: 2em; /* Add space between component and navigation bar */
 }
 
 .workouts-heading {
   text-align: center;
-  color: #6200ea;
+  color: white;
   margin-bottom: 1em;
   font-size: 2em; /* Adjust heading font size */
 }
@@ -24,14 +25,14 @@
 .muscle-group-buttons {
   display: flex;
   justify-content: space-around; /* Distribute buttons evenly */
-  background-color: rgba(0, 0, 0, 0.1); /* Even more transparent black background for the container */
+  background-color: rgba(0, 0, 0, 0.3); /* Less transparent black background */
   border-radius: var(--border-radius);
   padding: 1em;
   gap: 1em; /* Add space between buttons */
 }
 
 .muscle-group-button {
-  background: rgba(0, 0, 0, 0.6); /* Higher transparency black background */
+  background: rgba(0, 0, 0, 0.7); /* Less transparent black background */
   border: none;
   border-radius: 20px; /* More rounded corners */
   padding: 10px 20px;
@@ -63,10 +64,10 @@
 }
 
 .card {
-  background: rgba(0, 0, 0, 0.6); /* Higher transparency black background */
+  background: rgba(0, 0, 0, 0.8); /* Less transparent black background */
   border-radius: 20px; /* More rounded corners */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  padding: 5px 10px 10px; /* Reduced top padding, other values remain the same */
+  padding: 10px;
   margin: 10px;
   flex: 1;
   min-width: 200px;
@@ -81,7 +82,7 @@
 
 .card:hover {
   transform: translateY(-5px); /* Slightly lift the card on hover */
-  background: rgba(0, 0, 0, 0.4); /* Higher transparency black background on hover */
+  background: rgba(0, 0, 0, 0.6); /* Higher transparency black background on hover */
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Increase shadow on hover */
 }
 
@@ -107,26 +108,27 @@
 .card.selected p {
   color: black; /* Change text color to black when selected */
 }
-
 /* Diet Card Styles */
 .diet-card {
   margin-top: 20px; /* Add some spacing at the top */
-  background: rgba(0, 0, 0, 0.6); /* Higher transparency black background */
+  background: rgba(0, 0, 0, 0.8); /* Less transparent black background */
   border-radius: 20px; /* More rounded corners */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   padding: 10px;
   display: flex;
+  flex-direction: column; /* Add this line */
   justify-content: center; /* Center content horizontally */
   align-items: center; /* Center content vertically */
   text-align: center; /* Center text content */
-  margin-left: auto;
-  margin-right: auto;
+  margin: 0 auto; /* Center the card horizontally */
   transition: transform 0.3s, background-color 0.3s, box-shadow 0.3s; /* Add transition for smooth hover effect */
+  width: 80%; /* Ensure it fits well on different screen sizes */
+  max-width: 600px; /* Maximum width to keep it centered */
 }
 
 .diet-card:hover {
   transform: translateY(-5px); /* Slightly lift the card on hover */
-  background: rgba(0, 0, 0, 0.4); /* Higher transparency black background on hover */
+  background: rgba(0, 0, 0, 0.6); /* Higher transparency black background on hover */
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Increase shadow on hover */
 }
 
@@ -173,5 +175,9 @@
   .card-row {
     flex-direction: column; /* Stack items vertically on small screens */
     align-items: center;
+  }
+
+  .diet-card {
+    width: 100%; /* Ensure the diet card takes full width on small screens */
   }
 }

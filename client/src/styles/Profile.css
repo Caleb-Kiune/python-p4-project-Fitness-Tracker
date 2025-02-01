@@ -1,3 +1,13 @@
+/* CSS Variables */
+:root {
+  --primary-color: #007bff;
+  --secondary-color: #dc3545;
+  --background-color: #f5f7fa;
+  --font-color: #333;
+  --card-background: rgba(255, 255, 255, 0.8); /* Make the card background a bit transparent */
+  --border-radius: 10px;
+  --box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
 
 /* Profile Container */
 #user-management {
@@ -6,7 +16,7 @@
 }
 
 #user-management-title {
-  color: #333;
+  color: white;
   font-size: 2em;
   margin-bottom: 1em;
 }
@@ -20,11 +30,11 @@
 
 /* User Card */
 .user-card {
-  background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
+  background: rgba(245, 245, 245, 0.7); /* Make the card more transparent */
   margin: 10px;
   padding: 15px;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
   max-width: 250px;
   transition: transform 0.3s, box-shadow 0.3s;
   display: flex;
@@ -42,7 +52,7 @@
   height: 100px;
   margin-bottom: 10px;
   border-radius: 50%;
-  background: #007bff;
+  background: var(--primary-color);
   color: #fff;
   display: flex;
   align-items: center;
@@ -53,7 +63,11 @@
 
 .user-card-info {
   text-align: left;
-  color: #333;
+  color: var(--font-color);
+  width: 100%; /* Ensure it takes full width */
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Center content horizontally */
 }
 
 .user-card-info h2 {
@@ -77,19 +91,21 @@
 
 /* Buttons */
 button {
-  width: 100%;
-  padding: 10px;
+  width: 60%; /* Reduce width */
+  padding: 8px; /* Reduce padding */
   color: #fff;
   border: none;
-  border-radius: 5px;
+  border-radius: 15px; /* Increase border radius for more rounded corners */
   cursor: pointer;
   transition: background-color 0.3s;
   margin-top: 5px;
-  font-size: 1em;
+  font-size: 0.9em; /* Reduce font size */
+  display: flex;
+  justify-content: center; /* Center the button's content horizontally */
 }
 
 .edit-button {
-  background-color: #007bff;
+  background-color: var(--primary-color);
 }
 
 .edit-button:hover {
@@ -97,9 +113,16 @@ button {
 }
 
 .delete-button {
-  background-color: #dc3545;
+  background-color: var(--secondary-color);
 }
 
 .delete-button:hover {
   background-color: #c82333;
+}
+
+/* Error Message */
+.error {
+  color: red;
+  font-size: 1.2em;
+  margin-bottom: 1em;
 }

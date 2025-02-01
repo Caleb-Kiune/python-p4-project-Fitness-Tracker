@@ -6,6 +6,8 @@
   color: white; /* Ensure text is readable */
   min-height: 100vh; /* Ensure it covers the full viewport height */
   padding: 2em;
+  text-align: center; /* Center align the text */
+  margin-top: 2em; /* Reduce margin-top for less distance from navbar */
 }
 
 .exercise-details {
@@ -43,13 +45,14 @@
 .search-button {
   background: linear-gradient(90deg, var(--primary-color) 0%, var(--button-hover-color) 100%);
   color: white;
-  padding: 0.5em 1em;
+  padding: 0.25em 0.5em; /* Reduced padding to half */
   border: none;
   border-radius: var(--border-radius);
   cursor: pointer;
   font-size: 1em;
   transition: background-color 0.3s, transform 0.2s;
   margin-top: 0.5em; /* Add margin above for spacing */
+  width: 25%; /* Reduce the width by half again */
 }
 
 .search-button:hover {
