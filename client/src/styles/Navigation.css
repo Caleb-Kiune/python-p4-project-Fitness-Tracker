@@ -1,22 +1,75 @@
-header {
-  background-color: var(--primary-color);
-  color: white;
-  padding: 1em;
-  text-align: center;
+/* Layout Container */
+.layout-container {
+  display: flex;
+  flex-direction: column; /* Stack elements vertically */
 }
 
-nav ul {
+.navbar {
+  position: fixed; /* Fix the navbar position */
+  top: 0; /* Align to the top */
+  left: 0;
+  width: 100%; /* Full width */
+  height: 50px; /* Adjust height as needed */
+  background-color: var(--primary-color);
+  color: white;
+  display: flex; /* Flexbox for horizontal layout */
+  align-items: center;
+  justify-content: center; /* Center content horizontally */
+  padding: 0 1em; /* Padding for spacing */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Add a slight shadow for depth */
+  z-index: 1000; /* Ensure it stays above other content */
+}
+
+.navbar nav ul {
   list-style: none;
+  display: flex; /* Flexbox for horizontal list */
+  margin: 0;
   padding: 0;
 }
 
-nav ul li {
-  display: inline;
-  margin-right: 1em;
+.navbar nav ul li {
+  margin-left: 1em; /* Space between links */
+  display: flex; /* Flexbox for icons */
+  align-items: center;
 }
 
-nav ul li a {
+.navbar nav ul li a {
   color: white;
   text-decoration: none;
   font-weight: bold;
+  font-size: 0.9em; /* Adjusted font size */
+  transition: color 0.3s;
+}
+
+.navbar nav ul li a svg {
+  margin-right: 0.5em; /* Space between icon and text */
+}
+
+.navbar nav ul li a:hover {
+  color: var(--secondary-color); /* Added hover effect */
+}
+
+.navbar nav ul li.active a {
+  color: var(--secondary-color);
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 5px;
+  padding: 0.5em;
+}
+
+@media (max-width: 768px) {
+  .navbar {
+    flex-direction: column;
+    height: auto;
+    padding: 1em;
+  }
+
+  .navbar nav ul {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .navbar nav ul li {
+    margin-left: 0;
+    margin-bottom: 1em; /* Space between links */
+  }
 }

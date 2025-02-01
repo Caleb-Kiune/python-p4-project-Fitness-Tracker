@@ -1,20 +1,20 @@
 .custom-workouts-container {
-  background-image: url('/public/pexels-victorfreitas-841131.jpg'); /* Path to your background image */
+  background-image: url('/public/pexels-victorfreitas-841131.jpg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  color: white; /* Ensure text is readable */
-  min-height: 100vh; /* Ensure it covers the full viewport height */
+  color: white;
+  min-height: 100vh;
   padding: 2em;
 }
 
 .custom-workouts-form {
-  background-color:rgba(0, 0, 0, 0.489);
-  padding: 2em;
+  background-color: rgba(0, 0, 0, 0.4); /* Increased transparency */
+  padding: 1em; /* Reduced padding */
   border-radius: var(--border-radius);
   box-shadow: var(--box-shadow);
-  max-width: 800px; /* Adjusted to fit inputs side by side */
-  margin: 2em auto;
+  max-width: 800px;
+  margin: 1em auto; /* Reduced margin */
   text-align: center;
   display: flex;
   flex-direction: column;
@@ -26,30 +26,35 @@
   flex-wrap: wrap;
   justify-content: space-between;
   width: 100%;
-  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+  background-color: rgba(0, 0, 0, 0.2); /* Increased transparency */
   border-radius: var(--border-radius);
-  padding: 1em;
+  padding: 0.5em; /* Reduced padding */
 }
 
 .custom-workouts-form input,
 .custom-workouts-form select,
 .custom-workouts-form button {
   flex: 1;
-  margin: 0.5em;
+  margin: 0.2em; /* Reduced margin */
 }
 
 .custom-workouts-form input[type="text"], 
 .custom-workouts-form input[type="number"], 
 .custom-workouts-form select {
-  width: calc(20% - 1em); /* Adjusted to fit multiple inputs */
+  width: calc(20% - 0.4em); /* Adjusted width to account for reduced margin */
   padding: 0.5em;
-  background-color: var(--input-background);
+  background-color: white; /* White background */
+  color: black; /* Black text color */
   border: 1px solid var(--input-border);
   border-radius: var(--border-radius);
 }
 
+.custom-workouts-form input::placeholder {
+  color: black; /* Black placeholder */
+}
+
 .custom-workouts-form button {
-  background-color: var(--primary-color);
+  background-color: rgba(98, 0, 234, 0.8); /* Specified color with transparency */
   color: white;
   padding: 0.5em 1em;
   border: none;
@@ -57,73 +62,91 @@
   cursor: pointer;
   font-size: 1em;
   transition: background-color 0.3s;
+  width: 50%; /* Reduced width to half */
 }
 
 .custom-workouts-form button:hover {
-  background-color: var(--button-hover-color);
+  background-color: rgba(98, 0, 234, 1); /* Fully opaque on hover */
 }
 
 .custom-workouts-form .error {
-  color: red;
-  margin-bottom: 1em;
+  color: rgba(255, 0, 0, 0.8); /* Slight transparency for error color */
+  margin-bottom: 0.5em; /* Reduced margin */
 }
 
 .custom-workouts-form .success {
-  color: green;
-  margin-bottom: 1em;
+  color: rgba(0, 255, 0, 0.8); /* Slight transparency for success color */
+  margin-bottom: 0.5em; /* Reduced margin */
 }
 
 .workout-list {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 16px;
+  margin-top: 1em;
 }
-
-.custom-workout-card {
-  background-color: rgba(255, 255, 255, 0.8); /* Semi-transparent white background for readability */
+.exercise-item {
+  background-color: rgba(0, 0, 0, 0.6); /* Increased transparency */
+  padding: 1em;
+  margin: 0.5em 0;
   border-radius: var(--border-radius);
   box-shadow: var(--box-shadow);
-  margin: 1em;
-  padding: 1em;
-  width: 200px;
-  text-align: center;
-  transition: transform 0.2s, box-shadow 0.2s;
-  color: var(--text-color); /* Ensure text color is readable */
+  cursor: pointer;
+  transition: transform 0.2s;
+  display: flex;
+  justify-content: flex-start; /* Align content items to the left */
+  align-items: center;
 }
 
-.custom-workout-card:hover {
-  transform: scale(1.05); /* Slightly enlarge the card on hover */
-  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15); /* Increase shadow on hover */
+.exercise-item:hover {
+  transform: scale(1.05);
 }
 
-.custom-workout-card.completed {
-  background-color: rgba(124, 194, 203, 0.8); /* Light teal for completed workouts */
-  border-left: 4px solid #03dac6; /* Teal border for visual distinction */
+.exercise-item p {
+  margin: 0;
+  flex: 1;
+  font-weight: bold;
+  font-size: 1.2em;
+  color: #ffffff;
+  text-decoration: none; /* Ensure no line crossing */
+  background-color: transparent; /* Transparent background */
 }
 
-.custom-workout-card h3 {
-  color: var(--primary-color);
-  margin-bottom: 0.5em;
+.exercise-item.completed {
+  background-color: rgba(124, 194, 203, 0.6); /* Increased transparency */
+  border-left: 0px solid rgba(124, 194, 203, 0.6); /* Slight transparency for contrast */
 }
 
-.custom-workout-card p {
-  margin: 0.5em 0;
+.exercise-item.completed p {
+  color: black; /* Black text color when marked as complete */
 }
 
-/* Styles for buttons inside workout cards */
-.custom-workout-card button {
-  background-color: var(--secondary-color);
+.exercise-item .content-item {
+  background-color: rgba(255, 255, 255, 0); /* Fully transparent background */
+  padding: 0.3em 0.5em; /* Reduced padding */
+  border-radius: var(--border-radius);
+  margin-right: 0.2em; /* Reduced margin */
+  text-decoration: none; /* Ensure no line crossing */
+}
+
+.exercise-item .buttons-container {
+  margin-left: auto; /* Push the buttons to the right */
+}
+
+.exercise-item .buttons {
+  display: flex;
+  gap: 0.3em; /* Consistent gap */
+}
+
+.exercise-item .buttons button {
+  background-color: rgba(98, 0, 234, 0.8); /* Specified color with transparency */
   color: white;
   padding: 0.5em 1em;
   border: none;
   border-radius: var(--border-radius);
   cursor: pointer;
   font-size: 1em;
-  margin-top: 0.5em;
   transition: background-color 0.3s, transform 0.2s;
 }
 
-.custom-workout-card button:hover {
-  background-color: var(--button-hover-color);
+.exercise-item .buttons button:hover {
+  background-color: rgba(98, 0, 234, 1); /* Fully opaque on hover */
   transform: scale(1.05);
 }

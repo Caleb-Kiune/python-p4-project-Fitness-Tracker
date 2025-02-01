@@ -3,15 +3,6 @@ import '../styles/Profile.css';
 
 const Profile = () => {
   const [users, setUsers] = useState([]);
-  const [newUser, setNewUser] = useState({
-    username: "",
-    age: "",
-    current_weight: "",
-    gender: "",
-    height: "",
-    profile_picture: ""
-  });
-  const [editingUser, setEditingUser] = useState(null); // State for editing
 
   useEffect(() => {
     fetchUsers();
@@ -27,55 +18,8 @@ const Profile = () => {
     }
   };
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setNewUser({ ...newUser, [name]: value });
-  };
-
-  const handleSubmit = async () => {
-    try {
-      if (editingUser) {
-        await fetch(`http://127.0.0.1:5555/user/${editingUser.id}`, {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(newUser),
-        });
-      } else {
-        await fetch("http://127.0.0.1:5555/user", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(newUser),
-        });
-      }
-      fetchUsers();
-      setNewUser({
-        username: "",
-        age: "",
-        current_weight: "",
-        gender: "",
-        height: "",
-        profile_picture: ""
-      });
-      setEditingUser(null); // Reset editing user state
-    } catch (error) {
-      console.error("Error saving user", error);
-    }
-  };
-
   const handleEdit = (user) => {
-    setNewUser({
-      username: user.username,
-      age: user.age,
-      current_weight: user.current_weight,
-      gender: user.gender,
-      height: user.height,
-      profile_picture: user.profile_picture
-    });
-    setEditingUser(user);
+    // Handle edit functionality
   };
 
   const deleteUser = async (id) => {
@@ -92,76 +36,20 @@ const Profile = () => {
   return (
     <div id="user-management">
       <h1 id="user-management-title">User Management</h1>
-      <div id="user-form">
-        <input
-          type="text"
-          name="username"
-          placeholder="Username"
-          value={newUser.username}
-          onChange={handleInputChange}
-        />
-        <input
-          type="text"
-          name="age"
-          placeholder="Age"
-          value={newUser.age}
-          onChange={handleInputChange}
-        />
-        <input
-          type="text"
-          name="current_weight"
-          placeholder="Current Weight"
-          value={newUser.current_weight}
-          onChange={handleInputChange}
-        />
-        <input
-          type="text"
-          name="gender"
-          placeholder="Gender"
-          value={newUser.gender}
-          onChange={handleInputChange}
-        />
-        <input
-          type="text"
-          name="height"
-          placeholder="Height"
-          value={newUser.height}
-          onChange={handleInputChange}
-        />
-        <input
-          type="text"
-          name="profile_picture"
-          placeholder="Profile Picture URL"
-          value={newUser.profile_picture}
-          onChange={handleInputChange}
-        />
-        <button id="add-user-button" onClick={handleSubmit}>
-          {editingUser ? "Save Changes" : "Add User"}
-        </button>
-      </div>
       <div id="user-list">
         {users.map((user) => (
           <div key={user.id} className="user-card">
-            <img
-              src={user.profile_picture}
-              alt={`${user.username}'s profile`}
-              className="user-card-img"
-            />
+            <div className="user-initial">
+              {user.username.charAt(0)}
+            </div>
             <div className="user-card-info">
               <h2>{user.username}</h2>
-              <p>Age: {user.age}</p>
-              <p>Gender: {user.gender}</p>
-              <p>Height: {user.height}</p>
-              <p>Current Weight: {user.current_weight}</p>
-              <button className="edit-button" onClick={() => handleEdit(user)}>
-                Edit
-              </button>
-              <button
-                className="delete-button"
-                onClick={() => deleteUser(user.id)}
-              >
-                Delete
-              </button>
+              <p><i className="fas fa-user"></i> Age: {user.age}</p>
+              <p><i className="fas fa-venus-mars"></i> Gender: {user.gender}</p>
+              <p><i className="fas fa-ruler-vertical"></i> Height: {user.height}</p>
+              <p><i className="fas fa-weight"></i> Current Weight: {user.current_weight}</p>
+              <button className="edit-button" onClick={() => handleEdit(user)}>Edit</button>
+              <button className="delete-button" onClick={() => deleteUser(user.id)}>Delete</button>
             </div>
           </div>
         ))}

@@ -9,22 +9,38 @@
   background-color: var(--card-background);
   border-radius: var(--border-radius);
   box-shadow: var(--box-shadow);
-  max-width: 800px;
+  max-width: 100%; /* Adjusted to allow full width alignment */
   margin: 2em auto;
   text-align: center;
 }
 
-.report-summary {
+.cards-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+.card {
+  flex: 1;
   background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
   padding: 1em;
   border-radius: var(--border-radius);
   box-shadow: var (--box-shadow);
   color: white;
+  margin: 1em;
+  min-width: 200px; /* Ensure cards have a minimum width */
+  max-width: 300px; /* Ensure cards have a maximum width */
+}
+
+.card-title {
+  font-size: 1.5em;
+  font-weight: bold;
+  color: var(--primary-color);
+  margin-bottom: 1em;
 }
 
 .report-summary h2 {
-  color: var(--primary-color);
-  margin-bottom: 1em;
+  display: none; /* Hide original h2 tags */
 }
 
 .report-item {

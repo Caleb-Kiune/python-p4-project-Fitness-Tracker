@@ -1,26 +1,23 @@
-:root {
-  --primary-color: #6200ea; /* Bright purple */
-  --secondary-color: #03dac6; /* Bright teal */
-  --nav-hover-color: #007bff; /* Blue color used in navigation */
-}
-
+/* Home Container */
 .home {
   text-align: center;
-  padding: 2em;
+  padding: 4em 2em 2em 2em; /* Increased top padding to 4em, others remain 2em */
   background-image: url('/public/pexels-leonardho-1552242.jpg'); /* Path to your background image */
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
   color: white; /* Adjust text color to ensure it's readable */
-  min-height: 100vh; /* Ensure it covers the full viewport height */
-  margin: 0;
+  min-height: calc(100vh - 8em); /* Adjust height to account for top and bottom padding */
+  margin: 0; /* Remove margins */
   width: 100%;
 }
 
+/* Welcome Section */
 .welcome {
   margin-bottom: 2em;
 }
 
+/* Quick Links & Motivational Quote Sections */
 .quick-links, .motivational-quote {
   background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
   padding: 1em;
@@ -32,6 +29,7 @@
   justify-content: center;
 }
 
+/* Quick Links List */
 .quick-links ul {
   display: flex;
   flex-direction: row;
@@ -41,10 +39,12 @@
   padding: 0; /* Reset padding */
 }
 
+/* Quick Links List Items */
 .quick-links li {
   margin: 0; /* Remove vertical margin */
 }
 
+/* Quick Links Anchor Tags */
 .quick-links a {
   color: white;
   text-decoration: none;
@@ -54,22 +54,51 @@
   transition: color 0.3s ease; /* Add transition for smooth color change */
 }
 
+/* Quick Links Icons */
 .quick-links a i {
   margin-right: 0.5em;
 }
 
+/* Quick Links Hover Effect */
 .quick-links a:hover {
-  color: var(--nav-hover-color); /* Use the blue color from navigation on hover */
+  color: var(--secondary-color); /* Change color on hover to secondary color */
   text-decoration: underline;
 }
 
+/* Motivational Quote */
 .motivational-quote h4 {
   font-style: italic;
   color: #ccc;
 }
 
+/* Responsive Design */
 @media (max-width: 768px) {
   .quick-links a {
     font-size: 1em;
   }
+
+  .quick-links ul {
+    flex-direction: column; /* Stack links vertically on smaller screens */
+    gap: 0.5em; /* Reduce space between links */
+  }
+
+  .home {
+    padding: 1em; /* Adjust padding for smaller screens */
+  }
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.quick-links, .motivational-quote {
+  animation: fadeIn 0.5s ease-in-out;
 }

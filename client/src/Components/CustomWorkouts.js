@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import '../styles/CustomWorkouts.css';
 
-
 function CustomWorkouts() {
   const [workout, setWorkout] = useState({
     name: '',
@@ -61,7 +60,8 @@ function CustomWorkouts() {
       setEditingIndex(null);
     } else {
       const newWorkout = { ...workout, id: Date.now() };
-      updatedList = [...workoutList, newWorkout];
+      // Add the new workout at the beginning of the list
+      updatedList = [newWorkout, ...workoutList];
 
       fetch(apiURL, {
         method: 'POST',
@@ -76,7 +76,6 @@ function CustomWorkouts() {
     setWorkoutList(updatedList);
     setWorkout({ name: '', sets: '', reps: '', weight: '', category: 'Chest', day: 'Monday', completed: false });
   };
-
   const handleEdit = (index) => {
     setWorkout(workoutList[index]);
     setIsEditing(true);
@@ -145,7 +144,7 @@ function CustomWorkouts() {
             value={workout.weight}
             onChange={handleChange}
           />
-          <select name="category" value={workout.category} onChange={handleChange}>
+                    <select name="category" value={workout.category} onChange={handleChange}>
             <option value="Chest">Chest</option>
             <option value="Back">Back</option>
             <option value="Legs">Legs</option>
@@ -168,18 +167,28 @@ function CustomWorkouts() {
       <div className="workout-list">
         <h3>Exercises</h3>
         {workoutList.map((workout, index) => (
-          <div key={index} className={`custom-workout-card ${workout.completed ? 'completed' : ''}`}>
-            <h3>{workout.name}</h3>
-            <p>Sets: {workout.sets}</p>
-            <p>Reps: {workout.reps}</p>
-            <p>Weight: {workout.weight}</p>
-            <p>Category: {workout.category}</p>
-            <p>Day: {workout.day}</p>
-            <button onClick={() => toggleComplete(index)}>
-              {workout.completed ? 'Mark as Incomplete' : 'Mark as Complete'}
-            </button>
-            <button onClick={() => handleEdit(index)}>Edit</button>
-            <button onClick={() => handleDelete(index)}>Delete</button>
+          <div key={index} className={`exercise-item ${workout.completed ? 'completed' : ''}`}>
+            <div className="content-item">
+              <p>{workout.name}</p>
+            </div>
+            <div className="content-item">
+              <p>{workout.category}</p>
+            </div>
+            <div className="content-item">
+              <p>{workout.day}</p>
+            </div>
+            <div className="content-item">
+              <p>{workout.sets} sets x {workout.reps} reps at {workout.weight} kg</p>
+            </div>
+            <div className="buttons-container">
+              <div className="buttons">
+                <button onClick={() => toggleComplete(index)}>
+                  {workout.completed ? 'Mark as Incomplete' : 'Mark as Complete'}
+                </button>
+                <button onClick={() => handleEdit(index)}>Edit</button>
+                <button onClick={() => handleDelete(index)}>Delete</button>
+              </div>
+            </div>
           </div>
         ))}
       </div>
@@ -188,3 +197,5 @@ function CustomWorkouts() {
 }
 
 export default CustomWorkouts;
+
+

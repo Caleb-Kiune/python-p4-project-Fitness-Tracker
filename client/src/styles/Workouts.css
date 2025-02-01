@@ -1,3 +1,4 @@
+/* General Styles */
 .workouts {
   max-width: 1200px;
   margin: 0 auto;
@@ -6,7 +7,7 @@
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  color: rgb(12, 0, 0); /* Ensure text is readable */
+  color: white; /* Ensure text is readable */
   min-height: 100vh; /* Ensure it covers the full viewport height */
   border-radius: var(--border-radius);
   box-shadow: var(--box-shadow);
@@ -15,45 +16,57 @@
 
 .workouts-heading {
   text-align: center;
-  color: var(--primary-color);
+  color: #6200ea;
   margin-bottom: 1em;
+  font-size: 2em; /* Adjust heading font size */
 }
 
 .muscle-group-buttons {
   display: flex;
   justify-content: space-around; /* Distribute buttons evenly */
-  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background for buttons */
+  background-color: rgba(0, 0, 0, 0.1); /* Even more transparent black background for the container */
   border-radius: var(--border-radius);
   padding: 1em;
+  gap: 1em; /* Add space between buttons */
 }
 
 .muscle-group-button {
-  background: rgba(255, 255, 255, 0.8); /* Brighten the background */
+  background: rgba(0, 0, 0, 0.6); /* Higher transparency black background */
   border: none;
-  border-radius: 4px;
+  border-radius: 20px; /* More rounded corners */
   padding: 10px 20px;
-  color: #444;
+  color: white;
   font-size: 1em;
   cursor: pointer;
   transition: transform 0.2s, background-color 0.3s ease-in-out;
+  width: auto; /* Ensure button width is determined by content */
+  min-width: 120px; /* Set a minimum width */
 }
 
 .muscle-group-button:hover {
   transform: scale(1.05); /* Slightly enlarge the button on hover */
-  background: rgba(255, 255, 255, 1); /* Fully white background on hover */
+  background: rgba(0, 0, 0, 0.4); /* Higher transparency black background on hover */
 }
 
+.muscle-group-button:active,
+.muscle-group-button.selected {
+  background: rgba(98, 0, 234, 0.8); /* Specified color with transparency */
+  color: white; /* Change text color for contrast */
+  border: none; /* Remove border */
+}
+/* Card Styles */
 .card-row {
   display: flex;
   justify-content: space-around;
   flex-wrap: wrap; /* Wrap items if necessary */
   margin-top: 20px;
 }
+
 .card {
-  background: rgba(255, 255, 255, 0.8); /* Brighten the background */
-  border-radius: 8px;
+  background: rgba(0, 0, 0, 0.6); /* Higher transparency black background */
+  border-radius: 20px; /* More rounded corners */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  padding: 10px;
+  padding: 5px 10px 10px; /* Reduced top padding, other values remain the same */
   margin: 10px;
   flex: 1;
   min-width: 200px;
@@ -63,20 +76,43 @@
   justify-content: center; /* Center content vertically */
   align-items: center; /* Center content horizontally */
   text-align: center; /* Center text content */
+  transition: transform 0.3s, background-color 0.3s, box-shadow 0.3s; /* Add transition for smooth hover effect */
+}
+
+.card:hover {
+  transform: translateY(-5px); /* Slightly lift the card on hover */
+  background: rgba(0, 0, 0, 0.4); /* Higher transparency black background on hover */
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Increase shadow on hover */
+}
+
+.card:active,
+.card.selected {
+  background: rgba(124, 194, 203, 0.6); /* Specified color with transparency */
+  color: white; /* Change text color for contrast */
 }
 
 .card h4 {
   margin-bottom: 5px;
+  font-size: 1.2em; /* Ensure consistent font size */
+  color: white; /* Light text color for readability */
 }
 
 .card p {
   margin: 0;
+  font-size: 1em; /* Ensure consistent font size */
+  color: white; /* Light text color for readability */
 }
 
+.card.selected h4,
+.card.selected p {
+  color: black; /* Change text color to black when selected */
+}
+
+/* Diet Card Styles */
 .diet-card {
   margin-top: 20px; /* Add some spacing at the top */
-  background: rgba(255, 255, 255, 0.8); /* Brighten the background */
-  border-radius: 8px;
+  background: rgba(0, 0, 0, 0.6); /* Higher transparency black background */
+  border-radius: 20px; /* More rounded corners */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   padding: 10px;
   display: flex;
@@ -85,6 +121,25 @@
   text-align: center; /* Center text content */
   margin-left: auto;
   margin-right: auto;
+  transition: transform 0.3s, background-color 0.3s, box-shadow 0.3s; /* Add transition for smooth hover effect */
+}
+
+.diet-card:hover {
+  transform: translateY(-5px); /* Slightly lift the card on hover */
+  background: rgba(0, 0, 0, 0.4); /* Higher transparency black background on hover */
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Increase shadow on hover */
+}
+
+.diet-card:active,
+.diet-card.selected {
+  background: rgba(124, 194, 203, 0.6); /* Specified color with transparency */
+  color: white; /* Change text color for contrast */
+}
+
+.diet-card.selected h4,
+.diet-card.selected p,
+.diet-card.selected li {
+  color: black; /* Change text color to black when selected */
 }
 
 .diet-card ul {
@@ -94,13 +149,16 @@
 
 .diet-card li {
   margin: 5px 0;
+  font-size: 1em; /* Ensure consistent font size */
+  color: white; /* Light text color for readability */
 }
 
-.completed {
-  background-color: rgba(144, 238, 144, 0.5); /* Light green background */
-  text-decoration: line-through; /* Strike through the text */
+.diet-card h4 {
+  font-size: 1.2em; /* Ensure consistent font size */
+  color: white; /* Light text color for readability */
 }
 
+/* Responsive Design */
 @media (max-width: 768px) {
   .muscle-group-buttons {
     flex-direction: column; /* Stack buttons vertically on small screens */

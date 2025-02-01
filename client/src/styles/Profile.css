@@ -1,109 +1,103 @@
-.profile {
-  background-color: var(--card-background);
-  padding: 2em;
-  border-radius: var(--border-radius);
-  box-shadow: var(--box-shadow);
-  max-width: 400px;
-  margin: 2em auto;
+
+/* Profile Container */
+#user-management {
   text-align: center;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
-}
-
-.profile-container {
-  background-image: url('/public/hans-isaacson-iEKg9h5_hd4-unsplash.jpg'); /* Path to your background image */
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  color: white; /* Ensure text is readable */
-  min-height: 100vh; /* Ensure it covers the full viewport height */
   padding: 2em;
 }
 
-/* Form styles */
-#user-form {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+#user-management-title {
+  color: #333;
+  font-size: 2em;
+  margin-bottom: 1em;
 }
 
-#user-form input {
-  width: 300px; 
-  padding: 10px;
-  margin-bottom: 10px;
-  border-radius: 4px;
-  border: 1px solid #ddd;
-}
-
-#add-user-button {
-  width: 300px;
-  padding: 10px;
-  color: #fff;
-  background-color: #007bff;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  margin-top: 10px;
-}
-
-#add-user-button:hover {
-  background-color: #0056b3;
-}
-
+/* User List */
 #user-list {
-  list-style: none;
-  padding: 0;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
 }
 
+/* User Card */
 .user-card {
-  background-color: #f9f9f9;
+  background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
   margin: 10px;
-  padding: 10px;
-  border-radius: 4px;
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  max-width: 250px;
+  transition: transform 0.3s, box-shadow 0.3s;
   display: flex;
   flex-direction: column;
   align-items: center;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-  max-width: 300px;
 }
 
-.user-card-img {
-  width: 100%;
-  height: auto;
-  border-radius: 4px;
+.user-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.user-initial {
+  width: 100px;
+  height: 100px;
   margin-bottom: 10px;
+  border-radius: 50%;
+  background: #007bff;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 3em;
+  font-weight: bold;
 }
 
 .user-card-info {
-  text-align: center;
+  text-align: left;
+  color: #333;
+}
+
+.user-card-info h2 {
+  font-size: 1.2em;
+  color: #555;
+  margin-bottom: 0.5em;
+  font-weight: 600;
+}
+
+.user-card-info p {
+  font-size: 0.95em;
+  margin-bottom: 0.5em;
+  display: flex;
+  align-items: center;
+}
+
+.user-card-info p i {
+  margin-right: 5px;
+  color: #888;
+}
+
+/* Buttons */
+button {
+  width: 100%;
+  padding: 10px;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  margin-top: 5px;
+  font-size: 1em;
 }
 
 .edit-button {
-  width: auto;
-  margin: 5px;
-  padding: 5px 10px;
-  background-color: #0056b3;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-.delete-button {
-  width: auto;
-  margin: 5px;
-  padding: 5px 10px;
-  background-color: #dc3545;
-  border: none;
-  border-radius: 4px;
+  background-color: #007bff;
 }
 
 .edit-button:hover {
-  background-color: #004085;
+  background-color: #0056b3;
+}
+
+.delete-button {
+  background-color: #dc3545;
 }
 
 .delete-button:hover {

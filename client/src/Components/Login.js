@@ -16,6 +16,7 @@ const Login = () => {
     password: '',
     confirmPassword: ''
   });
+  const [errors, setErrors] = useState({});
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -26,14 +27,34 @@ const Login = () => {
     }
   };
 
+  const validateForm = () => {
+    const newErrors = {};
+    if (isLogin) {
+      if (!credentials.username) newErrors.username = 'Username is required';
+      if (!credentials.password) newErrors.password = 'Password is required';
+    } else {
+      if (!newUser.username) newErrors.username = 'Username is required';
+      if (!newUser.age) newErrors.age = 'Age is required';
+      if (!newUser.weight) newErrors.weight = 'Weight is required';
+      if (!newUser.gender) newErrors.gender = 'Gender is required';
+      if (!newUser.height) newErrors.height = 'Height is required';
+      if (!newUser.password) newErrors.password = 'Password is required';
+      if (newUser.password !== newUser.confirmPassword) newErrors.confirmPassword = 'Passwords do not match';
+    }
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (isLogin) {
-      // Handle login logic here (e.g., API call)
-      console.log('Submitted login:', credentials);
-    } else {
-      // Handle sign-up logic here (e.g., API call)
-      console.log('Submitted sign-up:', newUser);
+    if (validateForm()) {
+      if (isLogin) {
+        // Handle login logic here (e.g., API call)
+        console.log('Submitted login:', credentials);
+      } else {
+        // Handle sign-up logic here (e.g., API call)
+        console.log('Submitted sign-up:', newUser);
+      }
     }
   };
 
@@ -63,7 +84,10 @@ const Login = () => {
           placeholder="Username"
           value={isLogin ? credentials.username : newUser.username}
           onChange={handleInputChange}
+          aria-label="Username"
+          aria-required="true"
         />
+        {errors.username && <div className="error">{errors.username}</div>}
         {!isLogin && (
           <>
             <input
@@ -72,42 +96,60 @@ const Login = () => {
               placeholder="Age"
               value={newUser.age}
               onChange={handleInputChange}
+              aria-label="Age"
+              aria-required="true"
             />
+            {errors.age && <div className="error">{errors.age}</div>}
             <input
               type="number"
               name="weight"
               placeholder="Weight"
               value={newUser.weight}
               onChange={handleInputChange}
+              aria-label="Weight"
+              aria-required="true"
             />
+            {errors.weight && <div className="error">{errors.weight}</div>}
             <input
               type="text"
               name="gender"
               placeholder="Gender"
               value={newUser.gender}
               onChange={handleInputChange}
+              aria-label="Gender"
+              aria-required="true"
             />
+            {errors.gender && <div className="error">{errors.gender}</div>}
             <input
               type="number"
               name="height"
               placeholder="Height"
               value={newUser.height}
               onChange={handleInputChange}
+              aria-label="Height"
+              aria-required="true"
             />
+            {errors.height && <div className="error">{errors.height}</div>}
             <input
               type="password"
               name="password"
               placeholder="Password"
               value={newUser.password}
               onChange={handleInputChange}
+              aria-label="Password"
+              aria-required="true"
             />
+            {errors.password && <div className="error">{errors.password}</div>}
             <input
               type="password"
               name="confirmPassword"
               placeholder="Confirm Password"
               value={newUser.confirmPassword}
               onChange={handleInputChange}
+              aria-label="Confirm Password"
+              aria-required="true"
             />
+            {errors.confirmPassword && <div className="error">{errors.confirmPassword}</div>}
           </>
         )}
         {isLogin && (
@@ -117,8 +159,11 @@ const Login = () => {
             placeholder="Password"
             value={credentials.password}
             onChange={handleInputChange}
+            aria-label="Password"
+            aria-required="true"
           />
         )}
+        {errors.password && isLogin && <div className="error">{errors.password}</div>}
         <button type="submit">{isLogin ? 'Login' : 'Sign Up'}</button>
       </form>
     </div>
