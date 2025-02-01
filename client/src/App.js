@@ -8,6 +8,7 @@ import CustomWorkouts from './Components/CustomWorkouts';
 import Report from './Components/Report';
 import Home from './Components/Home';
 import './App.css';
+import Login from './Components/Login';
 
 function App() {
   const [users, setUsers] = useState([]);
@@ -24,6 +25,7 @@ function App() {
       <Navigation />
       <div className="container">
         <Routes>
+          <Route path="/login" element={<Login />} />
           <Route path="/" element={<Home />} />
           <Route path="/add-workout" element={<CustomWorkouts />} />
           <Route path="/details" element={<Details />} />

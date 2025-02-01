@@ -1,0 +1,59 @@
+.login-container {
+  background-color: var(--card-background);
+  padding: 2em;
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
+  max-width: 400px;
+  margin: 2em auto;
+  text-align: center;
+}
+
+.toggle-buttons {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1em;
+}
+
+.toggle-buttons button {
+  background-color: var(--secondary-color);
+  color: white;
+  padding: 0.5em 1em;
+  border: none;
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  font-size: 1em;
+  transition: background-color 0.3s;
+  margin: 0 0.5em;
+}
+
+.toggle-buttons button.active {
+  background-color: var(--primary-color);
+}
+
+.toggle-buttons button:hover {
+  background-color: var(--button-hover-color);
+}
+
+.login-form input {
+  width: 100%;
+  padding: 0.5em;
+  margin-bottom: 1em;
+  background-color: var(--input-background);
+  border: 1px solid var(--input-border);
+  border-radius: var(--border-radius);
+}
+
+.login-form button {
+  background-color: var(--primary-color);
+  color: white;
+  padding: 0.5em 1em;
+  border: none;
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  font-size: 1em;
+  transition: background-color 0.3s;
+}
+
+.login-form button:hover {
+  background-color: var(--button-hover-color);
+}

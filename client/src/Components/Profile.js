@@ -1,17 +1,15 @@
 import React, { useState, useEffect } from "react";
 import '../styles/Profile.css';
 
-
 const Profile = () => {
   const [users, setUsers] = useState([]);
   const [newUser, setNewUser] = useState({
+    username: "",
     age: "",
     current_weight: "",
     gender: "",
     height: "",
-    profile_picture: "",
-    target_weight: "",
-    username: "",
+    profile_picture: ""
   });
   const [editingUser, setEditingUser] = useState(null); // State for editing
 
@@ -55,13 +53,12 @@ const Profile = () => {
       }
       fetchUsers();
       setNewUser({
+        username: "",
         age: "",
         current_weight: "",
         gender: "",
         height: "",
-        profile_picture: "",
-        target_weight: "",
-        username: "",
+        profile_picture: ""
       });
       setEditingUser(null); // Reset editing user state
     } catch (error) {
@@ -71,13 +68,12 @@ const Profile = () => {
 
   const handleEdit = (user) => {
     setNewUser({
+      username: user.username,
       age: user.age,
       current_weight: user.current_weight,
       gender: user.gender,
       height: user.height,
-      profile_picture: user.profile_picture,
-      target_weight: user.target_weight,
-      username: user.username,
+      profile_picture: user.profile_picture
     });
     setEditingUser(user);
   };
@@ -139,13 +135,6 @@ const Profile = () => {
           value={newUser.profile_picture}
           onChange={handleInputChange}
         />
-        <input
-          type="text"
-          name="target_weight"
-          placeholder="Target Weight"
-          value={newUser.target_weight}
-          onChange={handleInputChange}
-        />
         <button id="add-user-button" onClick={handleSubmit}>
           {editingUser ? "Save Changes" : "Add User"}
         </button>
@@ -164,7 +153,6 @@ const Profile = () => {
               <p>Gender: {user.gender}</p>
               <p>Height: {user.height}</p>
               <p>Current Weight: {user.current_weight}</p>
-              <p>Target Weight: {user.target_weight}</p>
               <button className="edit-button" onClick={() => handleEdit(user)}>
                 Edit
               </button>
