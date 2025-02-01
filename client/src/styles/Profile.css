@@ -1,0 +1,111 @@
+.profile {
+  background-color: var(--card-background);
+  padding: 2em;
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
+  max-width: 400px;
+  margin: 2em auto;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+}
+
+.profile-container {
+  background-image: url('/public/hans-isaacson-iEKg9h5_hd4-unsplash.jpg'); /* Path to your background image */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  color: white; /* Ensure text is readable */
+  min-height: 100vh; /* Ensure it covers the full viewport height */
+  padding: 2em;
+}
+
+/* Form styles */
+#user-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#user-form input {
+  width: 300px; 
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 4px;
+  border: 1px solid #ddd;
+}
+
+#add-user-button {
+  width: 300px;
+  padding: 10px;
+  color: #fff;
+  background-color: #007bff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+#add-user-button:hover {
+  background-color: #0056b3;
+}
+
+#user-list {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.user-card {
+  background-color: #f9f9f9;
+  margin: 10px;
+  padding: 10px;
+  border-radius: 4px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  max-width: 300px;
+}
+
+.user-card-img {
+  width: 100%;
+  height: auto;
+  border-radius: 4px;
+  margin-bottom: 10px;
+}
+
+.user-card-info {
+  text-align: center;
+}
+
+.edit-button {
+  width: auto;
+  margin: 5px;
+  padding: 5px 10px;
+  background-color: #0056b3;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.delete-button {
+  width: auto;
+  margin: 5px;
+  padding: 5px 10px;
+  background-color: #dc3545;
+  border: none;
+  border-radius: 4px;
+}
+
+.edit-button:hover {
+  background-color: #004085;
+}
+
+.delete-button:hover {
+  background-color: #c82333;
+}

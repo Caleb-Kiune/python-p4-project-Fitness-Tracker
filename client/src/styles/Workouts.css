@@ -1,0 +1,118 @@
+.workouts {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  padding: 1em;
+  background-image: url('/public/pexels-leonardho-1552252.jpg'); /* Path to your background image */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  color: rgb(12, 0, 0); /* Ensure text is readable */
+  min-height: 100vh; /* Ensure it covers the full viewport height */
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
+  margin-bottom: 1em;
+}
+
+.workouts-heading {
+  text-align: center;
+  color: #333;
+  color: var(--primary-color);
+  text-align: center;
+}
+
+.category-cards {
+  display: flex;
+  flex-direction: column;
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background for workout cards */
+  border-radius: var(--border-radius);
+  padding: 1em;
+}
+
+.category-card {
+  background: rgba(255, 255, 255, 0.5); /* White with 50% opacity */
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin: 20px 0;
+  padding: 20px;
+  width: 100%;
+}
+
+.category-card h3 {
+  color: #444;
+  font-size: 1.4em;
+  border-bottom: 2px solid #eee;
+  padding-bottom: 10px;
+  margin-bottom: 20px;
+}
+
+.workout-cards {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  margin-bottom: 20px;
+}
+
+.workout-card {
+  background: rgba(255, 255, 255, 0.5); /* White with 50% opacity */
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  margin-bottom: 10px;
+  padding: 10px;
+  width: 200px;
+  text-align: center;
+  transition: transform 0.2s, background-color 0.3s ease-in-out;
+  cursor: pointer;
+}
+
+.workout-card:hover {
+  transform: scale(1.05); /* Slightly enlarge the card on hover */
+}
+
+.workout-card.completed {
+  background-color: rgba(212, 237, 218, 0.5); /* Green with 50% opacity */
+  border-color: rgba(195, 230, 203, 0.5);
+  background-color: #e0f7fa; /* Light teal for completed workouts */
+  border-left: 4px solid #03dac6;
+}
+
+.workout-card h4, .workout-card h3 {
+  margin: 0;
+  color: var(--primary-color);
+}
+
+.workout-card p {
+  margin: 5px 0;
+}
+
+.workout-card input {
+  width: 80px;
+  padding: 5px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  width: 100%;
+  padding: 0.2em;
+  background-color: var(--input-background);
+  border: 1px solid var(--input-border);
+  border-radius: var(--border-radius);
+}
+
+.workout-card .checkmark {
+  color: green;
+  font-size: 1.2em;
+  margin-left: 10px;
+  color: #03dac6;
+  font-size: 1.5em;
+}
+
+@media (max-width: 768px) {
+  .workout-cards {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .workout-card {
+    width: 100%;
+    margin-bottom: 1em;
+  }
+}

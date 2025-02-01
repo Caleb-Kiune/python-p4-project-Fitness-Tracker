@@ -4,8 +4,6 @@ from sqlalchemy.ext.associationproxy import association_proxy
 
 from config import db
 
-# Models go here!
-
 class User(db.Model, SerializerMixin):
     __tablename__ = 'user'
 
@@ -33,6 +31,25 @@ class User(db.Model, SerializerMixin):
             'profile_picture': self.profile_picture,
         }
 
+class Diet(db.Model, SerializerMixin):
+    __tablename__ = 'diet'
+
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(80), nullable=False)
+    description = db.Column(db.Text, nullable=True)
+    completed = db.Column(db.Boolean, default=False)
+    notes = db.Column(db.Text, nullable=True)
+
+    workouts = db.relationship('Workout', backref='diet', lazy=True, cascade='all, delete-orphan')
+
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'name': self.name,
+            'description': self.description,
+            'completed': self.completed,
+            'notes': self.notes,
+        }
 
 class Workout(db.Model, SerializerMixin):
     __tablename__ = 'workout'
@@ -40,6 +57,8 @@ class Workout(db.Model, SerializerMixin):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(80), nullable=False)
     duration = db.Column(db.Integer)
+    category = db.Column(db.String(80), nullable=False, default='Chest')
+    completed = db.Column(db.Boolean, default=False)
     diet_id = db.Column(db.Integer, db.ForeignKey('diet.id'), nullable=True)
 
     exercise_workouts = db.relationship('ExerciseWorkout', backref='workout', lazy=True, cascade='all, delete-orphan')
@@ -50,9 +69,10 @@ class Workout(db.Model, SerializerMixin):
             'id': self.id,
             'name': self.name,
             'duration': self.duration,
+            'category': self.category,
+            'completed': self.completed,
             'diet_id': self.diet_id,
         }
-
 
 class Exercise(db.Model, SerializerMixin):
     __tablename__ = 'exercise'
@@ -64,7 +84,7 @@ class Exercise(db.Model, SerializerMixin):
     reps = db.Column(db.String(10))
     category = db.Column(db.String(20), nullable=False, default='Chest')
     day = db.Column(db.String(10), nullable=False, default='Monday')
-    completed = db.Column(db.Boolean, nullable=False, default=False)  # Add this line
+    completed = db.Column(db.Boolean, nullable=False, default=False)
 
     exercise_workouts = db.relationship('ExerciseWorkout', backref='exercise', lazy=True, cascade='all, delete-orphan')
 
@@ -77,11 +97,8 @@ class Exercise(db.Model, SerializerMixin):
             'reps': self.reps,
             'category': self.category,
             'day': self.day,
-            'completed': self.completed  
+            'completed': self.completed
         }
-
-
-
 
 class ExerciseWorkout(db.Model, SerializerMixin):
     __tablename__ = 'exercise_workout'
@@ -89,7 +106,7 @@ class ExerciseWorkout(db.Model, SerializerMixin):
     id = db.Column(db.Integer, primary_key=True)
     exercise_id = db.Column(db.Integer, db.ForeignKey('exercise.id'), nullable=False)
     workout_id = db.Column(db.Integer, db.ForeignKey('workout.id'), nullable=False)
-    notes = db.Column(db.String(200), nullable=True) 
+    notes = db.Column(db.String(200), nullable=True)
 
     def to_dict(self):
         return {
@@ -99,7 +116,6 @@ class ExerciseWorkout(db.Model, SerializerMixin):
             'notes': self.notes,
         }
 
-
 class UserWorkoutLog(db.Model, SerializerMixin):
     __tablename__ = 'user_workout_log'
 
@@ -107,7 +123,7 @@ class UserWorkoutLog(db.Model, SerializerMixin):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     workout_id = db.Column(db.Integer, db.ForeignKey('workout.id'), nullable=False)
     date = db.Column(db.String(10), nullable=False)
-    notes = db.Column(db.String(200), nullable=True)  
+    notes = db.Column(db.String(200), nullable=True)
 
     def to_dict(self):
         return {
@@ -117,22 +133,6 @@ class UserWorkoutLog(db.Model, SerializerMixin):
             'date': self.date,
             'notes': self.notes,
         }
-
-
-class Diet(db.Model, SerializerMixin):
-    __tablename__ = 'diet'
-
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(80), nullable=False)
-
-    workouts = db.relationship('Workout', backref='diet', lazy=True, cascade='all, delete-orphan')
-
-    def to_dict(self):
-        return {
-            'id': self.id,
-            'name': self.name,
-        }
-
 
 class WeightLog(db.Model, SerializerMixin):
     __tablename__ = 'weight_log'

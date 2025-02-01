@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import '../App.css'; 
+import '../styles/Details.css';
+
 
 function Details() {
   const [searchTerm, setSearchTerm] = useState('');

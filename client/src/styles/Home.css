@@ -1,0 +1,24 @@
+.home {
+  text-align: center;
+  padding: 2em;
+  background-image: url('/public/pexels-leonardho-1552242.jpg'); /* Path to your background image */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  color: white; /* Adjust text color to ensure it's readable */
+  min-height: 100vh; /* Ensure it covers the full viewport height */
+  margin: 0;
+  width: 100%;
+}
+
+/* Optional: Add a semi-transparent background to text areas for better readability */
+.quick-links, .overview, .motivational-quote {
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+  padding: 1em;
+  border-radius: var(--border-radius);
+}
+
+.motivational-quote p {
+  font-style: italic;
+  color: #555;
+}

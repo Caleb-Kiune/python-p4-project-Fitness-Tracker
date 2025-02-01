@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import '../App.css';
+import '../styles/CustomWorkouts.css';
+
 
 function CustomWorkouts() {
   const [workout, setWorkout] = useState({
@@ -119,7 +120,7 @@ function CustomWorkouts() {
           <input
             type="text"
             name="name"
-            placeholder="Workout Name"
+            placeholder="Name"
             value={workout.name}
             onChange={handleChange}
           />

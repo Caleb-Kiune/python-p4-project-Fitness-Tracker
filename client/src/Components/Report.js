@@ -1,4 +1,7 @@
 import React, { useEffect, useState } from 'react';
+import '../styles/Report.css';
+
+
 
 const Report = () => {
   const [workouts, setWorkouts] = useState([]);

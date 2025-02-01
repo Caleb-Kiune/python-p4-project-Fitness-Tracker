@@ -49,16 +49,12 @@ class UserResource(Resource):
         )
         db.session.add(new_user)
         db.session.commit()
-
         return make_response(new_user.to_dict(), 201)
-
 
 class SingleUserResource(Resource):
     def get(self, user_id):
         user = User.query.get_or_404(user_id)
-        
         user_details = user.to_dict()
-
         return make_response(user_details, 200)
 
     def put(self, user_id):
@@ -74,7 +70,6 @@ class SingleUserResource(Resource):
         user.profile_picture = data.get('profile_picture', user.profile_picture)
 
         db.session.commit()
-
         return make_response(user.to_dict(), 200)
 
     def delete(self, user_id):
@@ -83,31 +78,24 @@ class SingleUserResource(Resource):
         db.session.commit()
         return make_response({"message": "User deleted successfully"}, 200)
 
-
 class UserWorkoutLogsResource(Resource):
     def get(self, user_id):
         user = User.query.get_or_404(user_id)
-
         workout_logs = UserWorkoutLog.query.filter_by(user_id=user_id).all()
         workout_logs_list = [log.to_dict() for log in workout_logs]
-
         return make_response({"workout_logs": workout_logs_list}, 200)
-
 
 class UserWeightLogsResource(Resource):
     def get(self, user_id):
         user = User.query.get_or_404(user_id)
-
         weight_logs = WeightLog.query.filter_by(user_id=user_id).all()
         weight_logs_list = [log.to_dict() for log in weight_logs]
-
         return make_response({"weight_logs": weight_logs_list}, 200)
 
 api.add_resource(UserResource, '/user')
 api.add_resource(SingleUserResource, '/user/<int:user_id>')
 api.add_resource(UserWorkoutLogsResource, '/user/<int:user_id>/workout_logs')
 api.add_resource(UserWeightLogsResource, '/user/<int:user_id>/weight_logs')
-
 
 # Workout model endpoints
 class WorkoutResource(Resource):
@@ -121,6 +109,8 @@ class WorkoutResource(Resource):
         new_workout = Workout(
             name=data['name'],
             duration=data.get('duration'),
+            category=data.get('category', 'Chest'),
+            completed=data.get('completed', False),
             diet_id=data.get('diet_id')
         )
         db.session.add(new_workout)
@@ -138,6 +128,8 @@ class SingleWorkoutResource(Resource):
 
         workout.name = data.get('name', workout.name)
         workout.duration = data.get('duration', workout.duration)
+        workout.category = data.get('category', workout.category)
+        workout.completed = data.get('completed', workout.completed)
         workout.diet_id = data.get('diet_id', workout.diet_id)
 
         db.session.commit()
@@ -168,7 +160,6 @@ class WorkoutUsersResource(Resource):
 
 api.add_resource(WorkoutUsersResource, '/workout/<int:workout_id>/users')
 
-
 # Exercise model endpoints
 class ExerciseResource(Resource):
     def get(self):
@@ -185,7 +176,7 @@ class ExerciseResource(Resource):
             reps=data.get('reps'),
             category=data.get('category', 'Chest'),
             day=data.get('day', 'Monday'),
-            completed=data.get('completed', False)  
+            completed=data.get('completed', False)
         )
         db.session.add(new_exercise)
         db.session.commit()
@@ -206,7 +197,7 @@ class SingleExerciseResource(Resource):
         exercise.reps = data.get('reps', exercise.reps)
         exercise.category = data.get('category', exercise.category)
         exercise.day = data.get('day', exercise.day)
-        exercise.completed = data.get('completed', exercise.completed)  # Handle the completed field
+        exercise.completed = data.get('completed', exercise.completed)
 
         db.session.commit()
         return make_response(exercise.to_dict(), 200)
@@ -216,7 +207,6 @@ class SingleExerciseResource(Resource):
         db.session.delete(exercise)
         db.session.commit()
         return make_response({"message": "Exercise deleted successfully"}, 200)
-
 
 class ExerciseWorkoutsResource(Resource):
     def get(self, exercise_id):
@@ -283,7 +273,10 @@ class DietResource(Resource):
     def post(self):
         data = request.get_json()
         new_diet = Diet(
-            name=data['name']
+            name=data['name'],
+            description=data.get('description'),
+            completed=data.get('completed', False),
+            notes=data.get('notes')
         )
         db.session.add(new_diet)
         db.session.commit()
@@ -297,7 +290,12 @@ class SingleDietResource(Resource):
     def put(self, diet_id):
         diet = Diet.query.get_or_404(diet_id)
         data = request.get_json()
+
         diet.name = data.get('name', diet.name)
+        diet.description = data.get('description', diet.description)
+        diet.completed = data.get('completed', diet.completed)
+        diet.notes = data.get('notes', diet.notes)
+
         db.session.commit()
         return make_response(diet.to_dict(), 200)
 
@@ -316,7 +314,6 @@ class DietWorkoutsResource(Resource):
 api.add_resource(DietResource, '/diet')
 api.add_resource(SingleDietResource, '/diet/<int:diet_id>')
 api.add_resource(DietWorkoutsResource, '/diet/<int:diet_id>/workouts')
-
 
 # WeightLog model endpoints
 class WeightLogResource(Resource):
@@ -372,7 +369,6 @@ class SingleWeightLogResource(Resource):
 
 api.add_resource(WeightLogResource, '/weight_log')
 api.add_resource(SingleWeightLogResource, '/weight_log/<int:weight_log_id>')
-
 
 if __name__ == '__main__':
     app.run(port=5555, debug=True)

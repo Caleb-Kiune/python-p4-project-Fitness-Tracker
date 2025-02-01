@@ -1,0 +1,88 @@
+.details-container {
+  background-image: url('/public/pexels-anush-1229356.jpg'); /* Path to your background image */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  color: white; /* Ensure text is readable */
+  min-height: 100vh; /* Ensure it covers the full viewport height */
+  padding: 2em;
+}
+
+.exercise-details {
+  background-color: var(--card-background);
+  padding: 1em;
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
+  margin-top: 1em;
+  text-align: center;
+}
+
+.search-form {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1em;
+}
+
+.search-input {
+  width: 70%;
+  padding: 0.5em;
+  margin-right: 0.5em;
+  background-color: var(--input-background);
+  border: 1px solid var(--input-border);
+  border-radius: var(--border-radius);
+}
+
+.search-button {
+  background-color: var(--primary-color);
+  color: white;
+  padding: 0.5em 1em;
+  border: none;
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  font-size: 1em;
+  transition: background-color 0.3s;
+}
+
+.search-button:hover {
+  background-color: var(--button-hover-color);
+}
+
+.exercise-list {
+  margin-top: 1em;
+}
+
+.exercise-item {
+  background-color: var(--card-background);
+  padding: 1em;
+  margin: 0.5em 0;
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.exercise-item:hover {
+  transform: scale(1.05);
+}
+
+.exercise-item p {
+  margin: 0;
+}
+
+.exercise-item a {
+  margin-left: 10px;
+  color: var(--primary-color);
+  text-decoration: none;
+}
+
+.exercise-item a:hover {
+  text-decoration: underline;
+}
+
+/* Optional: Add a semi-transparent background to list items for better readability */
+.exercise-list .exercise-item {
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+  border-radius: var(--border-radius);
+  padding: 1em;
+}

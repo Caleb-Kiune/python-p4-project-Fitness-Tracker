@@ -1,0 +1,43 @@
+.report-container {
+  background-image: url('/public/pexels-pixabay-163351.jpg'); /* Path to your background image */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  color: white; /* Ensure text is readable */
+  min-height: 100vh; /* Ensure it covers the full viewport height */
+  padding: 2em;
+  background-color: var(--card-background);
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
+  max-width: 800px;
+  margin: 2em auto;
+  text-align: center;
+}
+
+.report-summary {
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+  padding: 1em;
+  border-radius: var(--border-radius);
+  box-shadow: var (--box-shadow);
+  color: white;
+}
+
+.report-summary h2 {
+  color: var(--primary-color);
+  margin-bottom: 1em;
+}
+
+.report-item {
+  background-color: rgba(128, 128, 128, 0.242); /* Light grey for readability */
+  padding: 1em;
+  margin: 0.5em 0;
+  border-radius: var(--border-radius);
+  box-shadow: black;
+  color: white;
+  text-align: left;
+}
+
+.report-item span {
+  font-weight: bold;
+  color: var(--secondary-color);
+}

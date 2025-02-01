@@ -7,7 +7,7 @@ if __name__ == '__main__':
     fake = Faker()
     with app.app_context():
         print("Starting seed...")
-        
+
         # Clear existing data
         db.session.query(UserWorkoutLog).delete()
         db.session.query(ExerciseWorkout).delete()
@@ -16,9 +16,11 @@ if __name__ == '__main__':
         db.session.query(Workout).delete()
         db.session.query(Exercise).delete()
         db.session.query(Diet).delete()
-        
+
         # Create sample diets
-        diets = [Diet(name='Keto'), Diet(name='Vegan'), Diet(name='Paleo')]
+        diets = [Diet(name='Keto', description='Keto diet description', completed=False, notes=fake.sentence()),
+                 Diet(name='Vegan', description='Vegan diet description', completed=False, notes=fake.sentence()),
+                 Diet(name='Paleo', description='Paleo diet description', completed=False, notes=fake.sentence())]
         db.session.add_all(diets)
         db.session.commit()
 
@@ -44,7 +46,9 @@ if __name__ == '__main__':
             workout = Workout(
                 name=fake.word() + " Workout",
                 duration=fake.random_int(min=20, max=60),
-                diet=rc(diets)
+                category=rc(['Chest', 'Back', 'Legs', 'Arms', 'Shoulders']),
+                diet=rc(diets),
+                completed=False
             )
             workouts.append(workout)
         db.session.add_all(workouts)
@@ -59,7 +63,8 @@ if __name__ == '__main__':
                 sets=fake.random_int(min=1, max=5),
                 reps=fake.random_int(min=5, max=20),
                 category=rc(['Chest', 'Back', 'Legs', 'Arms', 'Shoulders']),
-                day=rc(['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'])
+                day=rc(['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']),
+                completed=False
             )
             exercises.append(exercise)
         db.session.add_all(exercises)
@@ -99,7 +104,7 @@ if __name__ == '__main__':
                 weight_log = WeightLog(
                     user=user,
                     date=fake.date_this_year(),
-                    weight=uniform(50.0, 100.0),  
+                    weight=uniform(50.0, 100.0),
                     notes=fake.sentence()
                 )
                 weight_logs.append(weight_log)
