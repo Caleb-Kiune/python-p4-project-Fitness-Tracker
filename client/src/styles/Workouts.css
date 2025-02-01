@@ -2,7 +2,6 @@
   max-width: 1200px;
   margin: 0 auto;
   padding: 20px;
-  padding: 1em;
   background-image: url('/public/pexels-leonardho-1552252.jpg'); /* Path to your background image */
   background-size: cover;
   background-position: center;
@@ -16,103 +15,105 @@
 
 .workouts-heading {
   text-align: center;
-  color: #333;
   color: var(--primary-color);
-  text-align: center;
+  margin-bottom: 1em;
 }
 
-.category-cards {
+.muscle-group-buttons {
   display: flex;
-  flex-direction: column;
-  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background for workout cards */
+  justify-content: space-around; /* Distribute buttons evenly */
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background for buttons */
   border-radius: var(--border-radius);
   padding: 1em;
 }
 
-.category-card {
-  background: rgba(255, 255, 255, 0.5); /* White with 50% opacity */
+.muscle-group-button {
+  background: rgba(255, 255, 255, 0.8); /* Brighten the background */
+  border: none;
+  border-radius: 4px;
+  padding: 10px 20px;
+  color: #444;
+  font-size: 1em;
+  cursor: pointer;
+  transition: transform 0.2s, background-color 0.3s ease-in-out;
+}
+
+.muscle-group-button:hover {
+  transform: scale(1.05); /* Slightly enlarge the button on hover */
+  background: rgba(255, 255, 255, 1); /* Fully white background on hover */
+}
+
+.card-row {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap; /* Wrap items if necessary */
+  margin-top: 20px;
+}
+.card {
+  background: rgba(255, 255, 255, 0.8); /* Brighten the background */
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  margin: 20px 0;
-  padding: 20px;
-  width: 100%;
-}
-
-.category-card h3 {
-  color: #444;
-  font-size: 1.4em;
-  border-bottom: 2px solid #eee;
-  padding-bottom: 10px;
-  margin-bottom: 20px;
-}
-
-.workout-cards {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-around;
-  margin-bottom: 20px;
-}
-
-.workout-card {
-  background: rgba(255, 255, 255, 0.5); /* White with 50% opacity */
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  margin-bottom: 10px;
   padding: 10px;
-  width: 200px;
-  text-align: center;
-  transition: transform 0.2s, background-color 0.3s ease-in-out;
-  cursor: pointer;
+  margin: 10px;
+  flex: 1;
+  min-width: 200px;
+  max-width: 220px; /* Adjust maximum width to fit more cards in one row */
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Center content vertically */
+  align-items: center; /* Center content horizontally */
+  text-align: center; /* Center text content */
 }
 
-.workout-card:hover {
-  transform: scale(1.05); /* Slightly enlarge the card on hover */
+.card h4 {
+  margin-bottom: 5px;
 }
 
-.workout-card.completed {
-  background-color: rgba(212, 237, 218, 0.5); /* Green with 50% opacity */
-  border-color: rgba(195, 230, 203, 0.5);
-  background-color: #e0f7fa; /* Light teal for completed workouts */
-  border-left: 4px solid #03dac6;
-}
-
-.workout-card h4, .workout-card h3 {
+.card p {
   margin: 0;
-  color: var(--primary-color);
 }
 
-.workout-card p {
+.diet-card {
+  margin-top: 20px; /* Add some spacing at the top */
+  background: rgba(255, 255, 255, 0.8); /* Brighten the background */
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 10px;
+  display: flex;
+  justify-content: center; /* Center content horizontally */
+  align-items: center; /* Center content vertically */
+  text-align: center; /* Center text content */
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.diet-card ul {
+  list-style-type: none;
+  padding-left: 0;
+}
+
+.diet-card li {
   margin: 5px 0;
 }
 
-.workout-card input {
-  width: 80px;
-  padding: 5px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  width: 100%;
-  padding: 0.2em;
-  background-color: var(--input-background);
-  border: 1px solid var(--input-border);
-  border-radius: var(--border-radius);
-}
-
-.workout-card .checkmark {
-  color: green;
-  font-size: 1.2em;
-  margin-left: 10px;
-  color: #03dac6;
-  font-size: 1.5em;
+.completed {
+  background-color: rgba(144, 238, 144, 0.5); /* Light green background */
+  text-decoration: line-through; /* Strike through the text */
 }
 
 @media (max-width: 768px) {
-  .workout-cards {
-    flex-direction: column;
+  .muscle-group-buttons {
+    flex-direction: column; /* Stack buttons vertically on small screens */
     align-items: center;
   }
 
-  .workout-card {
+  .muscle-group-button {
     width: 100%;
     margin-bottom: 1em;
+  }
+
+  .card-row {
+    flex-direction: column; /* Stack items vertically on small screens */
+    align-items: center;
   }
 }

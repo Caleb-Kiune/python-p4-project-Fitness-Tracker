@@ -1,107 +1,103 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import '../styles/Workouts.css';
 
-
 function Workouts() {
-  const [workouts, setWorkouts] = useState([]);
-  const [diets, setDiets] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [selectedGroup, setSelectedGroup] = useState('');
+  const [workouts, setWorkouts] = useState([
+    { id: 1, name: 'Push-Up', sets: 4, reps: 8, category: 'Chest', completed: false },
+    { id: 2, name: 'Pull-Up', sets: 4, reps: 8, category: 'Back', completed: false },
+    { id: 3, name: 'Squat', sets: 4, reps: 8, category: 'Legs', completed: false },
+    { id: 4, name: 'Bicep Curl', sets: 4, reps: 8, category: 'Arms', completed: false },
+    { id: 5, name: 'Shoulder Press', sets: 4, reps: 8, category: 'Shoulders', completed: false },
+    { id: 6, name: 'Bench Press', sets: 4, reps: 8, category: 'Chest', completed: false },
+    { id: 7, name: 'Deadlift', sets: 4, reps: 8, category: 'Back', completed: false },
+    { id: 8, name: 'Lunges', sets: 4, reps: 8, category: 'Legs', completed: false },
+    { id: 9, name: 'Tricep Dip', sets: 4, reps: 8, category: 'Arms', completed: false },
+    { id: 10, name: 'Lateral Raise', sets: 4, reps: 8, category: 'Shoulders', completed: false },
+    { id: 11, name: 'Chest Fly', sets: 4, reps: 8, category: 'Chest', completed: false },
+    { id: 12, name: 'Incline Bench Press', sets: 4, reps: 8, category: 'Chest', completed: false },
+    { id: 13, name: 'Seated Row', sets: 4, reps: 8, category: 'Back', completed: false },
+    { id: 14, name: 'Lat Pulldown', sets: 4, reps: 8, category: 'Back', completed: false },
+    { id: 15, name: 'Leg Press', sets: 4, reps: 8, category: 'Legs', completed: false },
+    { id: 16, name: 'Leg Extension', sets: 4, reps: 8, category: 'Legs', completed: false },
+    { id: 17, name: 'Hammer Curl', sets: 4, reps: 8, category: 'Arms', completed: false },
+    { id: 18, name: 'Tricep Pushdown', sets: 4, reps: 8, category: 'Arms', completed: false },
+    { id: 19, name: 'Front Raise', sets: 4, reps: 8, category: 'Shoulders', completed: false },
+    { id: 20, name: 'Shoulder Shrug', sets: 4, reps: 8, category: 'Shoulders', completed: false }
+  ]);
 
-  useEffect(() => {
-    // Fetch workout and diet data from backend
-    const fetchData = async () => {
-      try {
-        const workoutResponse = await fetch('http://127.0.0.1:5555/workout');
-        const dietResponse = await fetch('http://127.0.0.1:5555/diet');
-        const workoutData = await workoutResponse.json();
-        const dietData = await dietResponse.json();
+  const [dietCompleted, setDietCompleted] = useState(false);
 
-        setWorkouts(workoutData.workouts);
-        setDiets(dietData.diets);
-        setLoading(false);
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      }
-    };
+  const diets = {
+    Chest: ['High Protein Diet', 'Balanced Diet'],
+    Back: ['High Protein Diet', 'Low Carb Diet'],
+    Legs: ['High Protein Diet', 'Balanced Diet', 'High Carb Diet'],
+    Arms: ['Balanced Diet', 'High Protein Diet'],
+    Shoulders: ['High Protein Diet', 'Low Fat Diet']
+  };
 
-    fetchData();
-  }, []);
   const getWorkoutsByCategory = (category) => {
-    return workouts.filter(workout => workout.category === category);
+    return workouts.filter(workout => workout.category === category).slice(0, 4);
   };
 
-  const toggleExerciseCompleted = (workoutId) => {
-    const updatedWorkouts = workouts.map(workout =>
-      workout.id === workoutId ? { ...workout, completed: !workout.completed } : workout
+  const handleButtonClick = (muscleGroup) => {
+    setSelectedGroup(selectedGroup === muscleGroup ? '' : muscleGroup);
+  };
+
+  const markAsDone = (id) => {
+    const updatedWorkouts = workouts.map(workout => 
+      workout.id === id ? { ...workout, completed: !workout.completed } : workout
     );
     setWorkouts(updatedWorkouts);
   };
 
-  const handleWeightChange = (workoutId, newWeight) => {
-    const updatedWorkouts = workouts.map(workout =>
-      workout.id === workoutId ? { ...workout, weight: newWeight } : workout
-    );
-    setWorkouts(updatedWorkouts);
+  const markDietAsDone = () => {
+    setDietCompleted(!dietCompleted);
   };
-  const toggleDietCompleted = (dietId) => {
-    const updatedDiets = diets.map(diet =>
-      diet.id === dietId ? { ...diet, completed: !diet.completed } : diet
-    );
-    setDiets(updatedDiets);
-  };
+
   return (
     <div className="workouts">
       <h2 className="workouts-heading">Workouts by Muscle Group</h2>
-
-      {loading ? (
-        <p>Loading...</p>
-      ) : (
-        <div className="category-cards">
-          {['Chest', 'Back', 'Legs', 'Arms', 'Shoulders'].map(muscleGroup => (
-            <div key={muscleGroup} className="category-card">
-              <h3>{muscleGroup}</h3>
-
-              <div className="workout-cards">
-                {getWorkoutsByCategory(muscleGroup).map((workout, index) => (
-                  <div
-                    key={index}
-                    className={`workout-card ${workout.completed ? 'completed' : ''}`}
-                    onClick={() => toggleExerciseCompleted(workout.id)}
-                  >
-                    <h4>{workout.name}</h4>
-                    <p>Duration: {workout.duration} minutes</p>
-                    <p>Weight:
-                      <input
-                        type="text"
-                        value={workout.weight}
-                        onChange={(e) => handleWeightChange(workout.id, e.target.value)}
-                      />
-                    </p>
-                    {workout.completed && <span className="checkmark">✔️</span>}
-                  </div>
-                ))}
+      <div className="muscle-group-buttons">
+        {['Chest', 'Back', 'Legs', 'Arms', 'Shoulders'].map(muscleGroup => (
+          <button 
+            key={muscleGroup} 
+            className="muscle-group-button"
+            onClick={() => handleButtonClick(muscleGroup)}
+          >
+            {muscleGroup}
+          </button>
+        ))}
+      </div>
+      {selectedGroup && (
+        <>
+          <div className="card-row">
+            {getWorkoutsByCategory(selectedGroup).map(workout => (
+              <div 
+                key={workout.id} 
+                className={`card workout-card ${workout.completed ? 'completed' : ''}`}
+                onClick={() => markAsDone(workout.id)}
+              >
+                <h4>{workout.name}</h4>
+                <p><strong>{workout.sets} Sets</strong> of <strong>{workout.reps} Reps</strong></p>
               </div>
-              {diets.map(diet => (
-                <div
-                  key={diet.id}
-                  className={`diet-card ${diet.completed ? 'completed' : ''}`}
-                  onClick={() => toggleDietCompleted(diet.id)}
-                >
-                  <h4>Diet Plan</h4>
-                  <p>{diet.description}</p>
-                  {diet.completed && <span className="checkmark">✔️</span>}
-                </div>
+            ))}
+          </div>
+          <div 
+            className={`card diet-card ${dietCompleted ? 'completed' : ''}`}
+            onClick={markDietAsDone}
+          >
+            <h4><strong>Diet Recommendations</strong></h4>
+            <ul>
+              {diets[selectedGroup].map((diet, index) => (
+                <li key={index}>{diet}</li>
               ))}
-            </div>
-          ))}
-        </div>
+            </ul>
+          </div>
+        </>
       )}
     </div>
   );
 }
 
 export default Workouts;
-
-
-
-
