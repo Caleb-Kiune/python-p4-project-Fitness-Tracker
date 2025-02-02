@@ -1,4 +1,4 @@
-from random import randint, choice as rc, uniform
+from random import choice as rc, uniform
 from faker import Faker
 from app import app
 from models import db, User, Workout, Exercise, ExerciseWorkout, UserWorkoutLog, Diet, WeightLog
@@ -31,8 +31,7 @@ if __name__ == '__main__':
                 username=fake.user_name(),
                 age=fake.random_int(min=18, max=60),
                 gender=rc(['male', 'female']),
-                current_weight=f"{fake.random_int(min=50, max=100)}kg",
-                target_weight=f"{fake.random_int(min=50, max=100)}kg",
+                weight=f"{fake.random_int(min=50, max=100)}kg",
                 height=f"{fake.random_int(min=150, max=200)}cm",
                 profile_picture=fake.image_url()
             )

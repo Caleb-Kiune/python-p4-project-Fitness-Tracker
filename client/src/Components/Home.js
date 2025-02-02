@@ -14,7 +14,7 @@ function Home() {
         <ul>
           <li><Link to="/workouts" aria-label="View Workouts"><i className="fas fa-dumbbell"></i> View Workouts</Link></li>
           <li><Link to="/add-workout" aria-label="Add a Workout"><i className="fas fa-plus"></i> Add a Workout</Link></li>
-          <li><Link to="/profile" aria-label="Your Profile"><i className="fas fa-user"></i> Your Profile</Link></li>
+          <li><Link to="/report" aria-label="Reports"><i className="fas fa-clipboard"></i> Reports</Link></li>
         </ul>
       </div>
       <div className="motivational-quote" role="contentinfo">

@@ -3,7 +3,6 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Navigation from './Components/Navigation';
 import Workouts from './Components/Workouts';
 import Details from './Components/Details';
-import Profile from './Components/Profile';
 import CustomWorkouts from './Components/CustomWorkouts';
 import Report from './Components/Report';
 import Home from './Components/Home';
@@ -29,7 +28,6 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/add-workout" element={<CustomWorkouts />} />
           <Route path="/details" element={<Details />} />
-          <Route path="/profile" element={<Profile />} />
           <Route path="/report" element={<Report />} />
           <Route path="/workouts" element={<Workouts />} />
           <Route path="/users" element={<UserList users={users} />} />  {/* Display user data */}

@@ -1,13 +1,27 @@
 import React, { useEffect, useState, useMemo } from 'react';
 import '../styles/Report.css';
 
+const UserCard = ({ user }) => (
+  <div key={user.id} className="user-card card">
+    <div className="user-initial">
+      {user.username.charAt(0)}
+    </div>
+    <div className="user-card-info">
+      <h2>{user.username}</h2>
+      <p><i className="fas fa-user"></i> Age: {user.age}</p>
+      <p><i className="fas fa-venus-mars"></i> Gender: {user.gender}</p>
+      <p><i className="fas fa-ruler-vertical"></i> Height: {user.height}</p>
+      <p><i className="fas fa-weight"></i> Current Weight: {user.current_weight}</p>
+    </div>
+  </div>
+);
+
 const ReportItem = ({ date, name, sets, reps, weight, calories }) => (
   <li className="report-item">
     {date && <span>{date} - </span>}
     {name}: {sets && `${sets} sets x ${reps} reps,`} {weight && `${weight} kg`} {calories && `${calories} calories`}
   </li>
 );
-
 const ReportCard = ({ title, items, type }) => (
   <div className="report-summary card">
     <div className="card-title">{title}</div>
@@ -26,10 +40,11 @@ const ReportCard = ({ title, items, type }) => (
 const Report = () => {
   const [workouts, setWorkouts] = useState([]);
   const [completedDiets, setCompletedDiets] = useState([]);
-  const [weightLogs, setWeightLogs] = useState([]);
+  const [users, setUsers] = useState([]);
+  const [selectedUserId, setSelectedUserId] = useState(null);
   const apiURL = 'http://127.0.0.1:5555/exercise';
   const dietURL = 'http://127.0.0.1:5555/diet';
-  const weightURL = 'http://127.0.0.1:5555/weight';
+  const userURL = 'http://127.0.0.1:5555/user';
 
   useEffect(() => {
     const fetchData = async (url, setter, filterFunc = null) => {
@@ -42,25 +57,41 @@ const Report = () => {
         console.error(`Error fetching data from ${url}:`, error);
       }
     };
-
     fetchData(apiURL, (data) => setWorkouts(data.exercises));
     fetchData(dietURL, (data) => setCompletedDiets(data.diets.filter(diet => diet.completed)));
-    fetchData(weightURL, (data) => setWeightLogs(data.weightLogs));
+    fetchData(userURL, (data) => setUsers(data.users));
   }, []);
 
   const completedWorkouts = useMemo(() => workouts.filter(workout => workout.completed), [workouts]);
 
+  const handleUserSelection = (e) => {
+    setSelectedUserId(e.target.value);
+  };
+
+  const selectedUser = users.find(user => user.id === parseInt(selectedUserId));
+
   return (
     <div className="report-container">
-      <h1>My Reports</h1>
+      <h1>User Info</h1>
+      <div className="filter-container">
+        <label htmlFor="user-select">Select User ID:</label>
+        <select id="user-select" onChange={handleUserSelection} value={selectedUserId || ''}>
+          <option value="">Select a User</option>
+          {users.map(user => (
+            <option key={user.id} value={user.id}>{user.username}</option>
+          ))}
+        </select>
+      </div>
       <div className="cards-container">
+        {selectedUser && <UserCard user={selectedUser} />}
         <ReportCard title="Exercises" items={completedWorkouts} type="completed exercises" />
         <ReportCard title="Workouts" items={workouts} type="workouts" />
         <ReportCard title="Diets" items={completedDiets} type="completed diets" />
-        <ReportCard title="Weight Logs" items={weightLogs} type="weight logs" />
       </div>
     </div>
   );
 };
 
 export default Report;
+
+
