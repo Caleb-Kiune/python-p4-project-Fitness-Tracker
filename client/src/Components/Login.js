@@ -52,8 +52,23 @@ const Login = () => {
         // Handle login logic here (e.g., API call)
         console.log('Submitted login:', credentials);
       } else {
-        // Handle sign-up logic here (e.g., API call)
-        console.log('Submitted sign-up:', newUser);
+        // Handle sign-up logic here
+        fetch('http://127.0.0.1:5555/user', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(newUser),
+        })
+        .then(response => response.json())
+        .then(data => {
+          console.log('User created:', data);
+          // Handle successful user creation (e.g., show a success message or redirect)
+        })
+        .catch(error => {
+          console.error('Error:', error);
+          // Handle errors (e.g., show an error message)
+        });
       }
     }
   };

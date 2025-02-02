@@ -4,6 +4,8 @@ from sqlalchemy.ext.associationproxy import association_proxy
 
 from config import db
 
+# User Model
+
 class User(db.Model, SerializerMixin):
     __tablename__ = 'user'
 
@@ -11,8 +13,7 @@ class User(db.Model, SerializerMixin):
     username = db.Column(db.String(80), nullable=False, unique=True)
     age = db.Column(db.Integer)
     gender = db.Column(db.String(10))
-    current_weight = db.Column(db.String(10))
-    target_weight = db.Column(db.String(10))
+    weight = db.Column(db.String(10))  # Combine current_weight and target_weight into weight
     height = db.Column(db.String(10))
     profile_picture = db.Column(db.String(200))
 
@@ -25,8 +26,7 @@ class User(db.Model, SerializerMixin):
             'username': self.username,
             'age': self.age,
             'gender': self.gender,
-            'current_weight': self.current_weight,
-            'target_weight': self.target_weight,
+            'weight': self.weight,
             'height': self.height,
             'profile_picture': self.profile_picture,
         }
