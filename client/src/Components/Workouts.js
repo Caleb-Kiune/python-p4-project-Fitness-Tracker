@@ -39,6 +39,7 @@ function Workouts() {
   const handleButtonClick = (muscleGroup) => {
     setSelectedGroup(selectedGroup === muscleGroup ? '' : muscleGroup);
   };
+
   const markWorkoutAsDone = (id) => {
     const workoutToUpdate = workouts.find(workout => workout.id === id);
     const updatedWorkout = { ...workoutToUpdate, completed: !workoutToUpdate.completed };
@@ -84,6 +85,7 @@ function Workouts() {
       console.error('Error updating diet:', error);
     });
   };
+
   return (
     <div className="workouts">
       <h2 className="workouts-heading">Workouts by Muscle Group</h2>
@@ -105,7 +107,7 @@ function Workouts() {
               <div key={workout.id} className={`card workout-card ${workout.completed ? 'completed' : ''}`}>
                 <h4>{workout.name}</h4>
                 <p><strong>{workout.sets} Sets</strong> of <strong>{workout.reps} Reps</strong></p>
-                <button onClick={() => markWorkoutAsDone(workout.id)}>
+                <button onClick={() => markWorkoutAsDone(workout.id)} className={workout.completed ? 'completed' : ''}>
                   {workout.completed ? 'Undo' : 'Complete'}
                 </button>
               </div>
@@ -116,7 +118,7 @@ function Workouts() {
               <h4><strong>Diet Recommendation</strong></h4>
               <p>{diets[selectedGroup].name}</p>
               <p>{diets[selectedGroup].description}</p>
-              <button onClick={() => markDietAsDone(selectedGroup)}>
+              <button onClick={() => markDietAsDone(selectedGroup)} className={diets[selectedGroup].completed ? 'completed' : ''}>
                 {diets[selectedGroup].completed ? 'Undo' : 'Complete'}
               </button>
             </div>
@@ -128,5 +130,3 @@ function Workouts() {
 }
 
 export default Workouts;
-
-

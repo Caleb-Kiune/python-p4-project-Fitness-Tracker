@@ -110,6 +110,7 @@ function CustomWorkouts() {
 
     setWorkoutList(updatedList);
   };
+
   return (
     <div className="custom-workouts-container">
       <form onSubmit={handleSubmit} className="custom-workouts-form">
@@ -195,5 +196,3 @@ function CustomWorkouts() {
 }
 
 export default CustomWorkouts;
-
-

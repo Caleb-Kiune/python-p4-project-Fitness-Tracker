@@ -11,7 +11,6 @@ const UserCard = ({ user }) => (
       <p><i className="fas fa-user"></i> Age: {user.age}</p>
       <p><i className="fas fa-venus-mars"></i> Gender: {user.gender}</p>
       <p><i className="fas fa-ruler-vertical"></i> Height: {user.height}</p>
-      <p><i className="fas fa-weight"></i> Current Weight: {user.current_weight}</p>
     </div>
   </div>
 );
@@ -42,8 +41,7 @@ const Report = () => {
   const [exercises, setExercises] = useState([]);
   const [workouts, setWorkouts] = useState([]);
   const [completedDiets, setCompletedDiets] = useState([]);
-  const [users, setUsers] = useState([]);
-  const [selectedUser, setSelectedUser] = useState(null);
+  const [selectedUser, setSelectedUser] = useState(null); // Removed users from state
   const exercisesURL = 'http://127.0.0.1:5555/exercises';
   const workoutsURL = 'http://127.0.0.1:5555/workouts';
   const dietsURL = 'http://127.0.0.1:5555/diets';
@@ -64,7 +62,6 @@ const Report = () => {
     fetchData(workoutsURL, (data) => setWorkouts(data.workouts));
     fetchData(dietsURL, (data) => setCompletedDiets(data.diets.filter(diet => diet.completed)));
     fetchData(usersURL, (data) => {
-      setUsers(data.users);
       if (data.users.length > 0) {
         setSelectedUser(data.users[data.users.length - 1]); // Select the most recently added user
       }
@@ -87,4 +84,3 @@ const Report = () => {
 };
 
 export default Report;
-

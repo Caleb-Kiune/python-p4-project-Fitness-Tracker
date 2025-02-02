@@ -55,6 +55,7 @@
   color: white; /* Change text color for contrast */
   border: none; /* Remove border */
 }
+
 /* Card Styles */
 .card-row {
   display: flex;
@@ -86,8 +87,7 @@
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Increase shadow on hover */
 }
 
-.card:active,
-.card.selected {
+.card.completed {
   background: rgba(124, 194, 203, 0.6); /* Specified color with transparency */
   color: white; /* Change text color for contrast */
 }
@@ -104,10 +104,11 @@
   color: white; /* Light text color for readability */
 }
 
-.card.selected h4,
-.card.selected p {
-  color: black; /* Change text color to black when selected */
+.card.completed h4,
+.card.completed p {
+  color: black; /* Change text color to black when completed */
 }
+
 /* Diet Card Styles */
 .diet-card {
   margin-top: 20px; /* Add some spacing at the top */
@@ -132,16 +133,15 @@
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Increase shadow on hover */
 }
 
-.diet-card:active,
-.diet-card.selected {
+.diet-card.completed {
   background: rgba(124, 194, 203, 0.6); /* Specified color with transparency */
   color: white; /* Change text color for contrast */
 }
 
-.diet-card.selected h4,
-.diet-card.selected p,
-.diet-card.selected li {
-  color: black; /* Change text color to black when selected */
+.diet-card.completed h4,
+.diet-card.completed p,
+.diet-card.completed li {
+  color: black; /* Change text color to black when completed */
 }
 
 .diet-card ul {
@@ -158,6 +158,39 @@
 .diet-card h4 {
   font-size: 1.2em; /* Ensure consistent font size */
   color: white; /* Light text color for readability */
+}
+
+/* Button Styles */
+.card button {
+  background-color: rgba(98, 0, 234, 0.8); /* Blue color */
+  color: white;
+  padding: 0.5em 1em;
+  border: none;
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  font-size: 1em;
+  transition: background-color 0.3s;
+  margin-top: 15px;
+}
+
+.card button:hover {
+  background-color: rgba(98, 0, 234, 1); /* Fully opaque on hover */
+}
+
+.diet-card button {
+  background-color: rgba(98, 0, 234, 0.8); /* Blue color */
+  color: white;
+  padding: 0.5em 1em;
+  border: none;
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  font-size: 1em;
+  transition: background-color 0.3s;
+  margin-top: 15px;
+}
+
+.diet-card button:hover {
+  background-color: rgba(98, 0, 234, 1); /* Fully opaque on hover */
 }
 
 /* Responsive Design */
