@@ -1,72 +1,96 @@
 import React, { useState, useEffect } from 'react';
 import '../styles/Workouts.css';
 
+const muscleGroups = ['Chest', 'Back', 'Legs', 'Arms', 'Shoulders']; // Moved outside the component
+
 function Workouts() {
   const [selectedGroup, setSelectedGroup] = useState('');
-  const [workouts, setWorkouts] = useState([
-    { id: 1, name: 'Push-Up', sets: 4, reps: 8, category: 'Chest', completed: false, selected: false },
-    { id: 2, name: 'Pull-Up', sets: 4, reps: 8, category: 'Back', completed: false, selected: false },
-    { id: 3, name: 'Squat', sets: 4, reps: 8, category: 'Legs', completed: false, selected: false },
-    { id: 4, name: 'Bicep Curl', sets: 4, reps: 8, category: 'Arms', completed: false, selected: false },
-    { id: 5, name: 'Shoulder Press', sets: 4, reps: 8, category: 'Shoulders', completed: false, selected: false },
-    { id: 6, name: 'Bench Press', sets: 4, reps: 8, category: 'Chest', completed: false, selected: false },
-    { id: 7, name: 'Deadlift', sets: 4, reps: 8, category: 'Back', completed: false, selected: false },
-    { id: 8, name: 'Lunges', sets: 4, reps: 8, category: 'Legs', completed: false, selected: false },
-    { id: 9, name: 'Tricep Dip', sets: 4, reps: 8, category: 'Arms', completed: false, selected: false },
-    { id: 10, name: 'Lateral Raise', sets: 4, reps: 8, category: 'Shoulders', completed: false, selected: false },
-    { id: 11, name: 'Chest Fly', sets: 4, reps: 8, category: 'Chest', completed: false, selected: false },
-    { id: 12, name: 'Incline Bench Press', sets: 4, reps: 8, category: 'Chest', completed: false, selected: false },
-    { id: 13, name: 'Seated Row', sets: 4, reps: 8, category: 'Back', completed: false, selected: false },
-    { id: 14, name: 'Lat Pulldown', sets: 4, reps: 8, category: 'Back', completed: false, selected: false },
-    { id: 15, name: 'Leg Press', sets: 4, reps: 8, category: 'Legs', completed: false, selected: false },
-    { id: 16, name: 'Leg Extension', sets: 4, reps: 8, category: 'Legs', completed: false, selected: false },
-    { id: 17, name: 'Hammer Curl', sets: 4, reps: 8, category: 'Arms', completed: false, selected: false },
-    { id: 18, name: 'Tricep Pushdown', sets: 4, reps: 8, category: 'Arms', completed: false, selected: false },
-    { id: 19, name: 'Front Raise', sets: 4, reps: 8, category: 'Shoulders', completed: false, selected: false },
-    { id: 20, name: 'Shoulder Shrug', sets: 4, reps: 8, category: 'Shoulders', completed: false, selected: false }
-  ]);
+  const [workouts, setWorkouts] = useState([]);
+  const [diets, setDiets] = useState({});
 
-  const [dietCompleted, setDietCompleted] = useState(false);
-
-  const diets = {
-    Chest: ['High Protein Diet', 'Balanced Diet'],
-    Back: ['High Protein Diet', 'Low Carb Diet'],
-    Legs: ['High Protein Diet', 'Balanced Diet', 'High Carb Diet'],
-    Arms: ['Balanced Diet', 'High Protein Diet'],
-    Shoulders: ['High Protein Diet', 'Low Fat Diet']
-  };
-
+  // Fetch workouts from backend
   useEffect(() => {
-    // Add 'appear' class to all cards when they are rendered
-    document.querySelectorAll('.card').forEach(card => {
-      card.classList.add('appear');
-    });
-  }, [selectedGroup, workouts]);
+    fetch('http://127.0.0.1:5555/workout')
+      .then(response => response.json())
+      .then(data => {
+        setWorkouts(data.workouts);
+      })
+      .catch(error => {
+        console.error('Error fetching workouts:', error);
+      });
 
-  const getWorkoutsByCategory = (category) => {
-    return workouts.filter(workout => workout.category === category).slice(0, 4);
-  };
+    // Fetch diets and assign them to each muscle group
+    fetch('http://127.0.0.1:5555/diet')
+      .then(response => response.json())
+      .then(data => {
+        muscleGroups.forEach(muscleGroup => {
+          const randomDiet = data.diets[Math.floor(Math.random() * data.diets.length)];
+          setDiets(prevDiets => ({
+            ...prevDiets,
+            [muscleGroup]: randomDiet
+          }));
+        });
+      })
+      .catch(error => {
+        console.error('Error fetching diets:', error);
+      });
+  }, []); // Removed muscleGroups from the dependency array
 
   const handleButtonClick = (muscleGroup) => {
     setSelectedGroup(selectedGroup === muscleGroup ? '' : muscleGroup);
   };
 
-  const markAsDone = (id) => {
-    const updatedWorkouts = workouts.map(workout => 
-      workout.id === id ? { ...workout, selected: !workout.selected } : workout
-    );
-    setWorkouts(updatedWorkouts);
+  const markWorkoutAsDone = (id) => {
+    const workoutToUpdate = workouts.find(workout => workout.id === id);
+    const updatedWorkout = { ...workoutToUpdate, completed: !workoutToUpdate.completed };
+
+    fetch(`http://127.0.0.1:5555/workout/${id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(updatedWorkout),
+    })
+    .then(response => response.json())
+    .then(data => {
+      const updatedWorkouts = workouts.map(workout => 
+        workout.id === id ? data : workout
+      );
+      setWorkouts(updatedWorkouts);
+    })
+    .catch(error => {
+      console.error('Error updating workout:', error);
+    });
   };
 
-  const markDietAsDone = () => {
-    setDietCompleted(!dietCompleted);
+  const markDietAsDone = (muscleGroup) => {
+    const dietToUpdate = diets[muscleGroup];
+    const updatedDiet = { ...dietToUpdate, completed: !dietToUpdate.completed };
+
+    fetch(`http://127.0.0.1:5555/diet/${updatedDiet.id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(updatedDiet),
+    })
+    .then(response => response.json())
+    .then(data => {
+      setDiets(prevDiets => ({
+        ...prevDiets,
+        [muscleGroup]: data
+      }));
+    })
+    .catch(error => {
+      console.error('Error updating diet:', error);
+    });
   };
 
   return (
     <div className="workouts">
       <h2 className="workouts-heading">Workouts by Muscle Group</h2>
       <div className="muscle-group-buttons">
-        {['Chest', 'Back', 'Legs', 'Arms', 'Shoulders'].map(muscleGroup => (
+        {muscleGroups.map(muscleGroup => (
           <button 
             key={muscleGroup} 
             className={`muscle-group-button ${selectedGroup === muscleGroup ? 'selected' : ''}`}
@@ -79,28 +103,26 @@ function Workouts() {
       {selectedGroup && (
         <>
           <div className="card-row">
-            {getWorkoutsByCategory(selectedGroup).map(workout => (
-              <div 
-                key={workout.id} 
-                className={`card workout-card ${workout.completed ? 'completed' : ''} ${workout.selected ? 'selected' : ''}`}
-                onClick={() => markAsDone(workout.id)}
-              >
+            {workouts.filter(workout => workout.category === selectedGroup).slice(0, 4).map(workout => (
+              <div key={workout.id} className={`card workout-card ${workout.completed ? 'completed' : ''}`}>
                 <h4>{workout.name}</h4>
                 <p><strong>{workout.sets} Sets</strong> of <strong>{workout.reps} Reps</strong></p>
+                <button onClick={() => markWorkoutAsDone(workout.id)}>
+                  {workout.completed ? 'Undo' : 'Complete'}
+                </button>
               </div>
             ))}
           </div>
-          <div 
-            className={`card diet-card ${dietCompleted ? 'completed' : ''} ${dietCompleted ? 'selected' : ''}`}
-            onClick={markDietAsDone}
-          >
-            <h4><strong>Diet Recommendations</strong></h4>
-            <ul>
-              {diets[selectedGroup].map((diet, index) => (
-                <li key={index}>{diet}</li>
-              ))}
-            </ul>
-          </div>
+          {diets[selectedGroup] && (
+            <div className={`card diet-card ${diets[selectedGroup].completed ? 'completed' : ''}`}>
+              <h4><strong>Diet Recommendation</strong></h4>
+              <p>{diets[selectedGroup].name}</p>
+              <p>{diets[selectedGroup].description}</p>
+              <button onClick={() => markDietAsDone(selectedGroup)}>
+                {diets[selectedGroup].completed ? 'Undo' : 'Complete'}
+              </button>
+            </div>
+          )}
         </>
       )}
     </div>

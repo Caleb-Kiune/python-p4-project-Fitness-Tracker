@@ -97,6 +97,7 @@ api.add_resource(UserWorkoutLogsResource, '/user/<int:user_id>/workout_logs')
 api.add_resource(UserWeightLogsResource, '/user/<int:user_id>/weight_logs')
 
 # Workout model endpoints
+# Workout model endpoints
 class WorkoutResource(Resource):
     def get(self):
         workouts = Workout.query.all()

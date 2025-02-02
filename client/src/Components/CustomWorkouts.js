@@ -76,6 +76,7 @@ function CustomWorkouts() {
     setWorkoutList(updatedList);
     setWorkout({ name: '', sets: '', reps: '', weight: '', category: 'Chest', day: 'Monday', completed: false });
   };
+
   const handleEdit = (index) => {
     setWorkout(workoutList[index]);
     setIsEditing(true);
@@ -144,7 +145,7 @@ function CustomWorkouts() {
             value={workout.weight}
             onChange={handleChange}
           />
-                    <select name="category" value={workout.category} onChange={handleChange}>
+          <select name="category" value={workout.category} onChange={handleChange}>
             <option value="Chest">Chest</option>
             <option value="Back">Back</option>
             <option value="Legs">Legs</option>
@@ -165,7 +166,6 @@ function CustomWorkouts() {
       </form>
 
       <div className="workout-list">
-        
         {workoutList.map((workout, index) => (
           <div key={index} className={`exercise-item ${workout.completed ? 'completed' : ''}`}>
             <div className="content-item">
@@ -183,7 +183,7 @@ function CustomWorkouts() {
             <div className="buttons-container">
               <div className="buttons">
                 <button onClick={() => toggleComplete(index)}>
-                  {workout.completed ? 'Mark as Incomplete' : 'Mark as Complete'}
+                  {workout.completed ? 'Undo' : 'Complete'}
                 </button>
                 <button onClick={() => handleEdit(index)}>Edit</button>
                 <button onClick={() => handleDelete(index)}>Delete</button>
@@ -197,5 +197,3 @@ function CustomWorkouts() {
 }
 
 export default CustomWorkouts;
-
-

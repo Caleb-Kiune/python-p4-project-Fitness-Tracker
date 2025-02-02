@@ -51,6 +51,11 @@ class Diet(db.Model, SerializerMixin):
             'notes': self.notes,
         }
 
+
+
+# workout model
+
+
 class Workout(db.Model, SerializerMixin):
     __tablename__ = 'workout'
 
@@ -73,6 +78,7 @@ class Workout(db.Model, SerializerMixin):
             'completed': self.completed,
             'diet_id': self.diet_id,
         }
+
 
 class Exercise(db.Model, SerializerMixin):
     __tablename__ = 'exercise'
