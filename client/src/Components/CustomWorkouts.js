@@ -15,7 +15,7 @@ function CustomWorkouts() {
   const [isEditing, setIsEditing] = useState(false);
   const [editingIndex, setEditingIndex] = useState(null);
 
-  const apiURL = 'http://127.0.0.1:5555/exercise';
+  const apiURL = 'http://127.0.0.1:5555/exercises';
 
   useEffect(() => {
     fetch(apiURL)
@@ -30,7 +30,6 @@ function CustomWorkouts() {
       [e.target.name]: e.target.value,
     });
   };
-
   const handleSubmit = (e) => {
     e.preventDefault();
     const { name, sets, reps, weight } = workout;
@@ -111,7 +110,6 @@ function CustomWorkouts() {
 
     setWorkoutList(updatedList);
   };
-
   return (
     <div className="custom-workouts-container">
       <form onSubmit={handleSubmit} className="custom-workouts-form">
@@ -197,3 +195,5 @@ function CustomWorkouts() {
 }
 
 export default CustomWorkouts;
+
+

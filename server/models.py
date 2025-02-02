@@ -1,10 +1,23 @@
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy_serializer import SerializerMixin
-from sqlalchemy.ext.associationproxy import association_proxy
 
 from config import db
 
-# User Model
+# Association tables
+user_workouts = db.Table('user_workouts',
+    db.Column('user_id', db.Integer, db.ForeignKey('user.id'), primary_key=True),
+    db.Column('workout_id', db.Integer, db.ForeignKey('workout.id'), primary_key=True)
+)
+
+user_exercises = db.Table('user_exercises',
+    db.Column('user_id', db.Integer, db.ForeignKey('user.id'), primary_key=True),
+    db.Column('exercise_id', db.Integer, db.ForeignKey('exercise.id'), primary_key=True)
+)
+
+user_diets = db.Table('user_diets',
+    db.Column('user_id', db.Integer, db.ForeignKey('user.id'), primary_key=True),
+    db.Column('diet_id', db.Integer, db.ForeignKey('diet.id'), primary_key=True)
+)
 
 class User(db.Model, SerializerMixin):
     __tablename__ = 'user'
@@ -13,12 +26,15 @@ class User(db.Model, SerializerMixin):
     username = db.Column(db.String(80), nullable=False, unique=True)
     age = db.Column(db.Integer)
     gender = db.Column(db.String(10))
-    weight = db.Column(db.String(10))  # Combine current_weight and target_weight into weight
+    weight = db.Column(db.String(10))
     height = db.Column(db.String(10))
     profile_picture = db.Column(db.String(200))
 
     weight_logs = db.relationship('WeightLog', backref='user', lazy=True, cascade='all, delete-orphan')
     user_workout_logs = db.relationship('UserWorkoutLog', backref='user', lazy=True, cascade='all, delete-orphan')
+    workouts = db.relationship('Workout', secondary=user_workouts, backref=db.backref('users', lazy=True))
+    exercises = db.relationship('Exercise', secondary=user_exercises, backref=db.backref('users', lazy=True))
+    diets = db.relationship('Diet', secondary=user_diets, backref=db.backref('users', lazy=True))
 
     def to_dict(self):
         return {
@@ -50,12 +66,6 @@ class Diet(db.Model, SerializerMixin):
             'completed': self.completed,
             'notes': self.notes,
         }
-
-
-
-# workout model
-
-
 class Workout(db.Model, SerializerMixin):
     __tablename__ = 'workout'
 
@@ -78,7 +88,6 @@ class Workout(db.Model, SerializerMixin):
             'completed': self.completed,
             'diet_id': self.diet_id,
         }
-
 
 class Exercise(db.Model, SerializerMixin):
     __tablename__ = 'exercise'

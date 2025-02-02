@@ -22,6 +22,7 @@ const ReportItem = ({ date, name, sets, reps, weight, calories }) => (
     {name}: {sets && `${sets} sets x ${reps} reps,`} {weight && `${weight} kg`} {calories && `${calories} calories`}
   </li>
 );
+
 const ReportCard = ({ title, items, type }) => (
   <div className="report-summary card">
     <div className="card-title">{title}</div>
@@ -38,13 +39,15 @@ const ReportCard = ({ title, items, type }) => (
 );
 
 const Report = () => {
+  const [exercises, setExercises] = useState([]);
   const [workouts, setWorkouts] = useState([]);
   const [completedDiets, setCompletedDiets] = useState([]);
   const [users, setUsers] = useState([]);
-  const [selectedUserId, setSelectedUserId] = useState(null);
-  const apiURL = 'http://127.0.0.1:5555/exercise';
-  const dietURL = 'http://127.0.0.1:5555/diet';
-  const userURL = 'http://127.0.0.1:5555/user';
+  const [selectedUser, setSelectedUser] = useState(null);
+  const exercisesURL = 'http://127.0.0.1:5555/exercises';
+  const workoutsURL = 'http://127.0.0.1:5555/workouts';
+  const dietsURL = 'http://127.0.0.1:5555/diets';
+  const usersURL = 'http://127.0.0.1:5555/users';
 
   useEffect(() => {
     const fetchData = async (url, setter, filterFunc = null) => {
@@ -57,41 +60,31 @@ const Report = () => {
         console.error(`Error fetching data from ${url}:`, error);
       }
     };
-    fetchData(apiURL, (data) => setWorkouts(data.exercises));
-    fetchData(dietURL, (data) => setCompletedDiets(data.diets.filter(diet => diet.completed)));
-    fetchData(userURL, (data) => setUsers(data.users));
+    fetchData(exercisesURL, (data) => setExercises(data.exercises));
+    fetchData(workoutsURL, (data) => setWorkouts(data.workouts));
+    fetchData(dietsURL, (data) => setCompletedDiets(data.diets.filter(diet => diet.completed)));
+    fetchData(usersURL, (data) => {
+      setUsers(data.users);
+      if (data.users.length > 0) {
+        setSelectedUser(data.users[data.users.length - 1]); // Select the most recently added user
+      }
+    });
   }, []);
-
+  const completedExercises = useMemo(() => exercises.filter(exercise => exercise.completed), [exercises]);
   const completedWorkouts = useMemo(() => workouts.filter(workout => workout.completed), [workouts]);
-
-  const handleUserSelection = (e) => {
-    setSelectedUserId(e.target.value);
-  };
-
-  const selectedUser = users.find(user => user.id === parseInt(selectedUserId));
 
   return (
     <div className="report-container">
       <h1>User Info</h1>
-      <div className="filter-container">
-        <label htmlFor="user-select">Select User ID:</label>
-        <select id="user-select" onChange={handleUserSelection} value={selectedUserId || ''}>
-          <option value="">Select a User</option>
-          {users.map(user => (
-            <option key={user.id} value={user.id}>{user.username}</option>
-          ))}
-        </select>
-      </div>
       <div className="cards-container">
         {selectedUser && <UserCard user={selectedUser} />}
-        <ReportCard title="Exercises" items={completedWorkouts} type="completed exercises" />
-        <ReportCard title="Workouts" items={workouts} type="workouts" />
-        <ReportCard title="Diets" items={completedDiets} type="completed diets" />
+        <ReportCard title="Completed Exercises" items={completedExercises} type="completed exercises" />
+        <ReportCard title="Completed Workouts" items={completedWorkouts} type="completed workouts" />
+        <ReportCard title="Completed Diets" items={completedDiets} type="completed diets" />
       </div>
     </div>
   );
 };
 
 export default Report;
-
 

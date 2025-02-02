@@ -1,7 +1,7 @@
-from random import choice as rc, uniform
+from random import randint, choice as rc, uniform
 from faker import Faker
-from app import app
-from models import db, User, Workout, Exercise, ExerciseWorkout, UserWorkoutLog, Diet, WeightLog
+from config import app, db
+from models import User, Workout, Exercise, ExerciseWorkout, UserWorkoutLog, Diet, WeightLog
 
 if __name__ == '__main__':
     fake = Faker()
@@ -18,9 +18,11 @@ if __name__ == '__main__':
         db.session.query(Diet).delete()
 
         # Create sample diets
-        diets = [Diet(name='Keto', description='Keto diet description', completed=False, notes=fake.sentence()),
-                 Diet(name='Vegan', description='Vegan diet description', completed=False, notes=fake.sentence()),
-                 Diet(name='Paleo', description='Paleo diet description', completed=False, notes=fake.sentence())]
+        diets = [
+            Diet(name='Keto', description='Keto diet description', completed=False, notes=fake.sentence()),
+            Diet(name='Vegan', description='Vegan diet description', completed=False, notes=fake.sentence()),
+            Diet(name='Paleo', description='Paleo diet description', completed=False, notes=fake.sentence())
+        ]
         db.session.add_all(diets)
         db.session.commit()
 
@@ -69,6 +71,13 @@ if __name__ == '__main__':
         db.session.add_all(exercises)
         db.session.commit()
 
+        # Assign random diets, exercises, and workouts to users
+        for user in users:
+            user.diets.append(rc(diets))       # Assign a random diet to each user
+            user.exercises.append(rc(exercises)) # Assign a random exercise to each user
+            user.workouts.append(rc(workouts))   # Assign a random workout to each user
+        db.session.commit()
+
         # Create sample exercise workouts
         exercise_workouts = []
         for workout in workouts:
@@ -103,7 +112,7 @@ if __name__ == '__main__':
                 weight_log = WeightLog(
                     user=user,
                     date=fake.date_this_year(),
-                    weight=uniform(50.0, 100.0),
+                    weight=round(uniform(50.0, 100.0), 2),
                     notes=fake.sentence()
                 )
                 weight_logs.append(weight_log)

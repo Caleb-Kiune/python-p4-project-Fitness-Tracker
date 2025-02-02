@@ -10,7 +10,7 @@ function Workouts() {
 
   // Fetch workouts from backend
   useEffect(() => {
-    fetch('http://127.0.0.1:5555/workout')
+    fetch('http://127.0.0.1:5555/workouts')
       .then(response => response.json())
       .then(data => {
         setWorkouts(data.workouts);
@@ -20,7 +20,7 @@ function Workouts() {
       });
 
     // Fetch diets and assign them to each muscle group
-    fetch('http://127.0.0.1:5555/diet')
+    fetch('http://127.0.0.1:5555/diets')
       .then(response => response.json())
       .then(data => {
         muscleGroups.forEach(muscleGroup => {
@@ -39,12 +39,11 @@ function Workouts() {
   const handleButtonClick = (muscleGroup) => {
     setSelectedGroup(selectedGroup === muscleGroup ? '' : muscleGroup);
   };
-
   const markWorkoutAsDone = (id) => {
     const workoutToUpdate = workouts.find(workout => workout.id === id);
     const updatedWorkout = { ...workoutToUpdate, completed: !workoutToUpdate.completed };
 
-    fetch(`http://127.0.0.1:5555/workout/${id}`, {
+    fetch(`http://127.0.0.1:5555/workouts/${id}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -67,7 +66,7 @@ function Workouts() {
     const dietToUpdate = diets[muscleGroup];
     const updatedDiet = { ...dietToUpdate, completed: !dietToUpdate.completed };
 
-    fetch(`http://127.0.0.1:5555/diet/${updatedDiet.id}`, {
+    fetch(`http://127.0.0.1:5555/diets/${updatedDiet.id}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -85,7 +84,6 @@ function Workouts() {
       console.error('Error updating diet:', error);
     });
   };
-
   return (
     <div className="workouts">
       <h2 className="workouts-heading">Workouts by Muscle Group</h2>
@@ -130,3 +128,5 @@ function Workouts() {
 }
 
 export default Workouts;
+
+

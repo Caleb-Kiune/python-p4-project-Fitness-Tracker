@@ -53,12 +53,19 @@ const Login = () => {
         console.log('Submitted login:', credentials);
       } else {
         // Handle sign-up logic here
-        fetch('http://127.0.0.1:5555/user', {
+        fetch('http://127.0.0.1:5555/users', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify(newUser),
+          body: JSON.stringify({
+            username: newUser.username,
+            age: newUser.age,
+            weight: newUser.weight,
+            gender: newUser.gender,
+            height: newUser.height,
+            password: newUser.password
+          }),
         })
         .then(response => response.json())
         .then(data => {
@@ -80,7 +87,6 @@ const Login = () => {
   const showSignUpForm = () => {
     setIsLogin(false);
   };
-
   return (
     <div className="login-container">
       <div className="toggle-buttons">
@@ -186,3 +192,4 @@ const Login = () => {
 };
 
 export default Login;
+
