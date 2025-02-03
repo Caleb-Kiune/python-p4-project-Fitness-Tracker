@@ -150,3 +150,41 @@
   background-color: rgba(98, 0, 234, 1); /* Fully opaque on hover */
   transform: scale(1.05);
 }
+/* Ensure the Select User dropdown and its options are clearly visible */
+.select-user {
+  width: calc(20% - 0.4em);
+  padding: 0.5em;
+  background-color: white; /* White background */
+  color: black; /* Black text color */
+  border: 1px solid var(--input-border);
+  border-radius: var(--border-radius);
+  -webkit-appearance: none; /* Remove default arrow in Chrome and Safari */
+  -moz-appearance: none; /* Remove default arrow in Firefox */
+  appearance: none; /* Remove default arrow in other browsers */
+  background-image: url('data:image/svg+xml;charset=US-ASCII,<svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 10 10"><polygon points="0,0 10,0 5,5" fill="black"/></svg>'); /* Custom dropdown arrow */
+  background-repeat: no-repeat;
+  background-position: right 0.5em center;
+  background-size: 0.65em auto;
+  margin: 0.2em;
+}
+
+/* Style the dropdown options */
+.select-user option {
+  color: black; /* Black text color */
+  background-color: white; /* White background */
+}
+
+/* Ensure visibility of options when focused or hovered */
+.select-user:focus,
+.select-user:hover {
+  color: black; /* Black text color */
+  background-color: white; /* White background */
+}
+
+/* Ensure visibility of options */
+.select-user:focus option,
+.select-user:hover option {
+  color: black; /* Black text color */
+  background-color: white; /* White background */
+}
+

@@ -14,14 +14,22 @@ function CustomWorkouts() {
   const [workoutList, setWorkoutList] = useState([]);
   const [isEditing, setIsEditing] = useState(false);
   const [editingIndex, setEditingIndex] = useState(null);
+  const [users, setUsers] = useState([]); // State to hold users
+  const [selectedUser, setSelectedUser] = useState(''); // State to hold selected user
 
   const apiURL = 'http://127.0.0.1:5555/exercises';
+  const usersURL = 'http://127.0.0.1:5555/users'; // Example URL for fetching users
 
   useEffect(() => {
     fetch(apiURL)
       .then(response => response.json())
       .then(data => setWorkoutList(data.exercises))
       .catch(error => console.error('Error fetching data:', error));
+
+    fetch(usersURL)
+      .then(response => response.json())
+      .then(data => setUsers(data.users))
+      .catch(error => console.error('Error fetching users:', error));
   }, []);
 
   const handleChange = (e) => {
@@ -30,6 +38,11 @@ function CustomWorkouts() {
       [e.target.name]: e.target.value,
     });
   };
+
+  const handleUserChange = (e) => {
+    setSelectedUser(e.target.value);
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     const { name, sets, reps, weight } = workout;
@@ -58,7 +71,7 @@ function CustomWorkouts() {
 
       setEditingIndex(null);
     } else {
-      const newWorkout = { ...workout, id: Date.now() };
+      const newWorkout = { ...workout, id: Date.now(), user: selectedUser };
       // Add the new workout at the beginning of the list
       updatedList = [newWorkout, ...workoutList];
 
@@ -74,6 +87,7 @@ function CustomWorkouts() {
 
     setWorkoutList(updatedList);
     setWorkout({ name: '', sets: '', reps: '', weight: '', category: 'Chest', day: 'Monday', completed: false });
+    setSelectedUser('');
   };
 
   const handleEdit = (index) => {
@@ -116,6 +130,12 @@ function CustomWorkouts() {
       <form onSubmit={handleSubmit} className="custom-workouts-form">
         <h2>{isEditing ? 'Edit Workout' : 'Add Custom Exercise'}</h2>
         <div className="form-row">
+          <select name="user" value={selectedUser} onChange={handleUserChange} className="select-user">
+            <option value="" disabled>Select User</option>
+            {users.map((user, index) => (
+              <option key={index} value={user.id}>{user.name}</option>
+            ))}
+          </select>
           <input
             type="text"
             name="name"

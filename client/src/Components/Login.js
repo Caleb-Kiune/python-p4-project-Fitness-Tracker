@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import '../styles/Login.css'; // Import the CSS file
 
 const Login = () => {
@@ -17,6 +18,7 @@ const Login = () => {
     confirmPassword: ''
   });
   const [errors, setErrors] = useState({});
+  const navigate = useNavigate(); // Initialize the useNavigate hook
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -51,6 +53,7 @@ const Login = () => {
       if (isLogin) {
         // Handle login logic here (e.g., API call)
         console.log('Submitted login:', credentials);
+        navigate('/'); // Redirect to home after successful login
       } else {
         // Handle sign-up logic here
         fetch('http://127.0.0.1:5555/users', {
@@ -71,6 +74,7 @@ const Login = () => {
         .then(data => {
           console.log('User created:', data);
           // Handle successful user creation (e.g., show a success message or redirect)
+          navigate('/'); // Redirect to home after successful sign-up
         })
         .catch(error => {
           console.error('Error:', error);
@@ -87,6 +91,7 @@ const Login = () => {
   const showSignUpForm = () => {
     setIsLogin(false);
   };
+
   return (
     <div className="login-container">
       <div className="toggle-buttons">
@@ -192,4 +197,3 @@ const Login = () => {
 };
 
 export default Login;
-

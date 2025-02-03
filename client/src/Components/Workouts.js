@@ -5,8 +5,10 @@ const muscleGroups = ['Chest', 'Back', 'Legs', 'Arms', 'Shoulders']; // Moved ou
 
 function Workouts() {
   const [selectedGroup, setSelectedGroup] = useState('');
+  const [selectedUser, setSelectedUser] = useState('');
   const [workouts, setWorkouts] = useState([]);
   const [diets, setDiets] = useState({});
+  const [users, setUsers] = useState([]);
 
   // Fetch workouts from backend
   useEffect(() => {
@@ -34,10 +36,24 @@ function Workouts() {
       .catch(error => {
         console.error('Error fetching diets:', error);
       });
+
+    // Fetch users
+    fetch('http://127.0.0.1:5555/users')
+      .then(response => response.json())
+      .then(data => {
+        setUsers(data.users);
+      })
+      .catch(error => {
+        console.error('Error fetching users:', error);
+      });
   }, []); // Removed muscleGroups from the dependency array
 
   const handleButtonClick = (muscleGroup) => {
     setSelectedGroup(selectedGroup === muscleGroup ? '' : muscleGroup);
+  };
+
+  const handleUserSelect = (e) => {
+    setSelectedUser(e.target.value);
   };
 
   const markWorkoutAsDone = (id) => {
@@ -90,6 +106,14 @@ function Workouts() {
     <div className="workouts">
       <h2 className="workouts-heading">Workouts by Muscle Group</h2>
       <div className="muscle-group-buttons">
+        <select className="user-select" onChange={handleUserSelect} value={selectedUser}>
+          <option value="">Select User</option>
+          {users.map(user => (
+            <option key={user.id} value={user.id}>
+              {user.username}
+            </option>
+          ))}
+        </select>
         {muscleGroups.map(muscleGroup => (
           <button 
             key={muscleGroup} 
@@ -101,18 +125,16 @@ function Workouts() {
         ))}
       </div>
       {selectedGroup && (
-        <>
-          <div className="card-row">
-            {workouts.filter(workout => workout.category === selectedGroup).slice(0, 4).map(workout => (
-              <div key={workout.id} className={`card workout-card ${workout.completed ? 'completed' : ''}`}>
-                <h4>{workout.name}</h4>
-                <p><strong>{workout.sets} Sets</strong> of <strong>{workout.reps} Reps</strong></p>
-                <button onClick={() => markWorkoutAsDone(workout.id)} className={workout.completed ? 'completed' : ''}>
-                  {workout.completed ? 'Undo' : 'Complete'}
-                </button>
-              </div>
-            ))}
-          </div>
+        <div className="card-row">
+          {workouts.filter(workout => workout.category === selectedGroup).slice(0, 1).map(workout => (
+            <div key={workout.id} className={`card workout-card ${workout.completed ? 'completed' : ''}`}>
+              <h4>{workout.name}</h4>
+              <p><strong>{workout.sets} Sets</strong> of <strong>{workout.reps} Reps</strong></p>
+              <button onClick={() => markWorkoutAsDone(workout.id)} className={workout.completed ? 'completed' : ''}>
+                {workout.completed ? 'Undo' : 'Complete'}
+              </button>
+            </div>
+          ))}
           {diets[selectedGroup] && (
             <div className={`card diet-card ${diets[selectedGroup].completed ? 'completed' : ''}`}>
               <h4><strong>Diet Recommendation</strong></h4>
@@ -123,7 +145,7 @@ function Workouts() {
               </button>
             </div>
           )}
-        </>
+        </div>
       )}
     </div>
   );

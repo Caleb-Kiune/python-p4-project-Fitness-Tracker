@@ -41,7 +41,8 @@ const Report = () => {
   const [exercises, setExercises] = useState([]);
   const [workouts, setWorkouts] = useState([]);
   const [completedDiets, setCompletedDiets] = useState([]);
-  const [selectedUser, setSelectedUser] = useState(null); // Removed users from state
+  const [users, setUsers] = useState([]);
+  const [selectedUser, setSelectedUser] = useState(null);
   const exercisesURL = 'http://127.0.0.1:5555/exercises';
   const workoutsURL = 'http://127.0.0.1:5555/workouts';
   const dietsURL = 'http://127.0.0.1:5555/diets';
@@ -58,21 +59,38 @@ const Report = () => {
         console.error(`Error fetching data from ${url}:`, error);
       }
     };
+
     fetchData(exercisesURL, (data) => setExercises(data.exercises));
     fetchData(workoutsURL, (data) => setWorkouts(data.workouts));
     fetchData(dietsURL, (data) => setCompletedDiets(data.diets.filter(diet => diet.completed)));
     fetchData(usersURL, (data) => {
+      setUsers(data.users);
       if (data.users.length > 0) {
-        setSelectedUser(data.users[data.users.length - 1]); // Select the most recently added user
+        setSelectedUser(data.users[data.users.length - 1]);
       }
     });
   }, []);
+
+  const handleUserChange = (e) => {
+    const userId = e.target.value;
+    const user = users.find((user) => user.id === parseInt(userId));
+    setSelectedUser(user);
+  };
+
   const completedExercises = useMemo(() => exercises.filter(exercise => exercise.completed), [exercises]);
   const completedWorkouts = useMemo(() => workouts.filter(workout => workout.completed), [workouts]);
 
   return (
     <div className="report-container">
       <h1>User Info</h1>
+      <div className="filter-container">
+        <select id="user-select" className="select-user" value={selectedUser ? selectedUser.id : ''} onChange={handleUserChange}>
+          <option value="" disabled>Select User</option>
+          {users.map((user) => (
+            <option key={user.id} value={user.id}>{user.username}</option>
+          ))}
+        </select>
+      </div>
       <div className="cards-container">
         {selectedUser && <UserCard user={selectedUser} />}
         <ReportCard title="Completed Exercises" items={completedExercises} type="completed exercises" />

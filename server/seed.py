@@ -73,9 +73,20 @@ if __name__ == '__main__':
 
         # Assign random diets, exercises, and workouts to users
         for user in users:
-            user.diets.append(rc(diets))       # Assign a random diet to each user
-            user.exercises.append(rc(exercises)) # Assign a random exercise to each user
-            user.workouts.append(rc(workouts))   # Assign a random workout to each user
+            # Assign a random diet to each user if not already assigned
+            diet = rc(diets)
+            if diet not in user.diets:
+                user.diets.append(diet)
+            
+            # Assign a random exercise to each user if not already assigned
+            exercise = rc(exercises)
+            if exercise not in user.exercises:
+                user.exercises.append(exercise)
+            
+            # Assign a random workout to each user if not already assigned
+            workout = rc(workouts)
+            if workout not in user.workouts:
+                user.workouts.append(workout)
         db.session.commit()
 
         # Create sample exercise workouts
