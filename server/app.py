@@ -130,7 +130,20 @@ api.add_resource(SingleUserWorkoutAssignmentResource, '/user_workout_assignments
 # UserDietAssignment Resource for assigning and unassigning diets
 class UserDietAssignmentResource(Resource):
     def get(self):
-        assignments = UserDietAssignment.query.all()
+        user_id = request.args.get('user_id', type=int)
+        completed = request.args.get('completed', type=str)
+
+        query = UserDietAssignment.query
+
+        if user_id is not None:
+            query = query.filter_by(user_id=user_id)
+        if completed is not None:
+            if completed.lower() == 'true':
+                query = query.filter_by(completed=True)
+            elif completed.lower() == 'false':
+                query = query.filter_by(completed=False)
+
+        assignments = query.all()
         return jsonify([assignment.to_dict() for assignment in assignments])
 
     def post(self):
@@ -171,10 +184,24 @@ api.add_resource(SingleUserDietAssignmentResource, '/user_diet_assignments/<int:
 
 
 # CustomExercise Resource for CRUD operations
+# app.py
+
 class CustomExerciseListResource(Resource):
-    # Get all custom exercises
     def get(self):
-        exercises = CustomExercise.query.all()
+        user_id = request.args.get('user_id', type=int)
+        completed = request.args.get('completed', type=str)
+
+        query = CustomExercise.query
+
+        if user_id is not None:
+            query = query.filter_by(user_id=user_id)
+        if completed is not None:
+            if completed.lower() == 'true':
+                query = query.filter_by(completed=True)
+            elif completed.lower() == 'false':
+                query = query.filter_by(completed=False)
+
+        exercises = query.all()
         return jsonify({'exercises': [exercise.to_dict() for exercise in exercises]})
 
     # Create a new custom exercise
