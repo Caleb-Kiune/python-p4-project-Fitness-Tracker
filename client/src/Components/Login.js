@@ -53,6 +53,25 @@ const Login = () => {
       if (isLogin) {
         // Handle login logic here (e.g., API call)
         console.log('Submitted login:', credentials);
+        // Example: Fetch request to login endpoint (not implemented in backend yet)
+        /*
+        fetch('http://127.0.0.1:5555/login', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(credentials),
+        })
+        .then(response => response.json())
+        .then(data => {
+          console.log('Logged in:', data);
+          navigate('/'); // Redirect to home after successful login
+        })
+        .catch(error => {
+          console.error('Error:', error);
+          // Handle errors (e.g., show an error message)
+        });
+        */
         navigate('/'); // Redirect to home after successful login
       } else {
         // Handle sign-up logic here

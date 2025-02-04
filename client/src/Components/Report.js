@@ -15,10 +15,9 @@ const UserCard = ({ user }) => (
   </div>
 );
 
-const ReportItem = ({ date, name, sets, reps, weight, calories }) => (
+const ReportItem = ({ name, sets, reps, description }) => (
   <li className="report-item">
-    {date && <span>{date} - </span>}
-    {name}: {sets && `${sets} sets x ${reps} reps,`} {weight && `${weight} kg`} {calories && `${calories} calories`}
+    {name}: {sets && `${sets} sets x ${reps} reps`} {description && description}
   </li>
 );
 
@@ -36,16 +35,11 @@ const ReportCard = ({ title, items, type }) => (
     )}
   </div>
 );
-
 const Report = () => {
-  const [exercises, setExercises] = useState([]);
   const [workouts, setWorkouts] = useState([]);
   const [completedDiets, setCompletedDiets] = useState([]);
   const [users, setUsers] = useState([]);
   const [selectedUser, setSelectedUser] = useState(null);
-  const exercisesURL = 'http://127.0.0.1:5555/exercises';
-  const workoutsURL = 'http://127.0.0.1:5555/workouts';
-  const dietsURL = 'http://127.0.0.1:5555/diets';
   const usersURL = 'http://127.0.0.1:5555/users';
 
   useEffect(() => {
@@ -60,26 +54,51 @@ const Report = () => {
       }
     };
 
-    fetchData(exercisesURL, (data) => setExercises(data.exercises));
-    fetchData(workoutsURL, (data) => setWorkouts(data.workouts));
-    fetchData(dietsURL, (data) => setCompletedDiets(data.diets.filter(diet => diet.completed)));
     fetchData(usersURL, (data) => {
-      setUsers(data.users);
-      if (data.users.length > 0) {
-        setSelectedUser(data.users[data.users.length - 1]);
+      setUsers(data);
+      if (data.length > 0) {
+        setSelectedUser(data[data.length - 1]);
       }
     });
   }, []);
-
   const handleUserChange = (e) => {
     const userId = e.target.value;
     const user = users.find((user) => user.id === parseInt(userId));
     setSelectedUser(user);
   };
 
-  const completedExercises = useMemo(() => exercises.filter(exercise => exercise.completed), [exercises]);
-  const completedWorkouts = useMemo(() => workouts.filter(workout => workout.completed), [workouts]);
+  useEffect(() => {
+    if (selectedUser) {
+      fetch(`http://127.0.0.1:5555/user_workout_assignments?user_id=${selectedUser.id}`)
+        .then(response => response.json())
+        .then(data => {
+          const workoutIds = data.filter(a => a.completed).map(a => a.workout_id);
+          fetch(`http://127.0.0.1:5555/workouts`)
+            .then(response => response.json())
+            .then(workoutsData => {
+              const userWorkouts = workoutsData.filter(workout => workoutIds.includes(workout.id));
+              setWorkouts(userWorkouts);
+            });
+        })
+        .catch(error => console.error('Error fetching workout assignments:', error));
 
+      fetch(`http://127.0.0.1:5555/user_diet_assignments?user_id=${selectedUser.id}`)
+        .then(response => response.json())
+        .then(data => {
+          const dietIds = data.filter(a => a.completed).map(a => a.diet_id);
+          fetch(`http://127.0.0.1:5555/diets`)
+            .then(response => response.json())
+            .then(dietsData => {
+              const userDiets = dietsData.filter(diet => dietIds.includes(diet.id));
+              setCompletedDiets(userDiets);
+            });
+        })
+        .catch(error => console.error('Error fetching diet assignments:', error));
+    } else {
+      setWorkouts([]);
+      setCompletedDiets([]);
+    }
+  }, [selectedUser]);
   return (
     <div className="report-container">
       <h1>User Info</h1>
@@ -93,8 +112,7 @@ const Report = () => {
       </div>
       <div className="cards-container">
         {selectedUser && <UserCard user={selectedUser} />}
-        <ReportCard title="Completed Exercises" items={completedExercises} type="completed exercises" />
-        <ReportCard title="Completed Workouts" items={completedWorkouts} type="completed workouts" />
+        <ReportCard title="Completed Workouts" items={workouts} type="completed workouts" />
         <ReportCard title="Completed Diets" items={completedDiets} type="completed diets" />
       </div>
     </div>
@@ -102,3 +120,5 @@ const Report = () => {
 };
 
 export default Report;
+
+
