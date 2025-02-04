@@ -14,6 +14,7 @@ if __name__ == '__main__':
         db.session.query(Workout).delete()
         db.session.query(Diet).delete()
         db.session.query(User).delete()
+        db.session.commit()
 
         # Create sample diets
         diets = [
@@ -23,7 +24,8 @@ if __name__ == '__main__':
             Diet(name='Vegan Diet', description='A plant-based diet with no animal products.', category='Shoulders'),
             Diet(name='Keto Diet', description='A high-fat, low-carb diet.', category='Arms')
         ]
-        db.session.bulk_save_objects(diets)
+        # Use add_all instead of bulk_save_objects
+        db.session.add_all(diets)
         db.session.commit()
 
         # Create sample users
@@ -38,7 +40,8 @@ if __name__ == '__main__':
                 password=fake.password()
             )
             users.append(user)
-        db.session.bulk_save_objects(users)
+        # Use add_all instead of bulk_save_objects
+        db.session.add_all(users)
         db.session.commit()
 
         # Create sample workouts
@@ -49,7 +52,32 @@ if __name__ == '__main__':
             Workout(name='Shoulder Press', category='Shoulders', sets=3, reps=12),
             Workout(name='Bicep Curl', category='Arms', sets=3, reps=15)
         ]
-        db.session.bulk_save_objects(workouts)
+        # Use add_all instead of bulk_save_objects
+        db.session.add_all(workouts)
+        db.session.commit()
+
+        # Create sample user workout assignments
+        for user in users:
+            workout = rc(workouts)
+            assignment = UserWorkoutAssignment(
+                user_id=user.id,
+                workout_id=workout.id,
+                completed=fake.boolean(),
+                date_assigned=fake.date_time_this_year()
+            )
+            db.session.add(assignment)
+        db.session.commit()
+
+        # Create sample user diet assignments
+        for user in users:
+            diet = rc(diets)
+            assignment = UserDietAssignment(
+                user_id=user.id,
+                diet_id=diet.id,
+                completed=fake.boolean(),
+                date_assigned=fake.date_time_this_year()
+            )
+            db.session.add(assignment)
         db.session.commit()
 
         print("Seeding complete!")

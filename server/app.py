@@ -9,7 +9,7 @@ from flask_cors import CORS
 
 # Local imports
 from config import app, db
-from models import User, Workout, Diet, UserWorkoutAssignment, UserDietAssignment
+from models import User, Workout, Diet, UserWorkoutAssignment, UserDietAssignment, CustomExercise
 
 # Initialize Flask-Migrate
 migrate = Migrate(app, db)
@@ -170,6 +170,87 @@ class SingleUserDietAssignmentResource(Resource):
 api.add_resource(SingleUserDietAssignmentResource, '/user_diet_assignments/<int:assignment_id>')
 
 
+# CustomExercise Resource for CRUD operations
+class CustomExerciseListResource(Resource):
+    # Get all custom exercises
+    def get(self):
+        exercises = CustomExercise.query.all()
+        return jsonify({'exercises': [exercise.to_dict() for exercise in exercises]})
+
+    # Create a new custom exercise
+    def post(self):
+        data = request.get_json()
+        new_exercise = CustomExercise(
+            name=data['name'],
+            sets=data['sets'],
+            reps=data['reps'],
+            weight=data['weight'],
+            category=data['category'],
+            day=data['day'],
+            completed=False,
+            user_id=None  # Initially unassigned
+        )
+        db.session.add(new_exercise)
+        db.session.commit()
+        return new_exercise.to_dict(), 201
+
+api.add_resource(CustomExerciseListResource, '/custom_exercises')
+
+class CustomExerciseResource(Resource):
+    # Get a single custom exercise by ID
+    def get(self, exercise_id):
+        exercise = CustomExercise.query.get(exercise_id)
+        if exercise is None:
+            return {'message': 'Exercise not found'}, 404
+        return exercise.to_dict()
+
+    # Update a custom exercise by ID
+    def put(self, exercise_id):
+        exercise = CustomExercise.query.get(exercise_id)
+        if exercise is None:
+            return {'message': 'Exercise not found'}, 404
+        data = request.get_json()
+        for field in ['name', 'sets', 'reps', 'weight', 'category', 'day', 'completed', 'user_id']:
+            if field in data:
+                setattr(exercise, field, data[field])
+        db.session.commit()
+        return exercise.to_dict(), 200
+
+    # Delete a custom exercise by ID
+    def delete(self, exercise_id):
+        exercise = CustomExercise.query.get(exercise_id)
+        if exercise is None:
+            return {'message': 'Exercise not found'}, 404
+        db.session.delete(exercise)
+        db.session.commit()
+        return {'message': 'Exercise deleted'}, 200
+
+api.add_resource(CustomExerciseResource, '/custom_exercises/<int:exercise_id>')
+
+
 
 if __name__ == '__main__':
     app.run(port=5555, debug=True)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

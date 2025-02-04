@@ -7,6 +7,8 @@ from config import db
 # models.py
 
 # User Table
+# Part 2: User Model
+
 class User(db.Model, SerializerMixin):
     __tablename__ = 'users'  # Label: Users Table
 
@@ -17,6 +19,9 @@ class User(db.Model, SerializerMixin):
     gender = db.Column(db.String(10), nullable=False)
     height = db.Column(db.Float, nullable=False)
     password = db.Column(db.String(128), nullable=False)
+
+    # Relationships
+    custom_exercises = db.relationship('CustomExercise', backref='user', cascade='all, delete-orphan')
 
     def __repr__(self):
         return f'<User {self.username}>'
@@ -29,8 +34,9 @@ class User(db.Model, SerializerMixin):
             'weight': self.weight,
             'gender': self.gender,
             'height': self.height,
-            'password': self.password
+            # Exclude password from the serialized output for security
         }
+
     
 # Workout Table
 class Workout(db.Model, SerializerMixin):
@@ -123,3 +129,40 @@ class UserDietAssignment(db.Model, SerializerMixin):
             'completed': self.completed,
             'date_assigned': self.date_assigned.isoformat()  # Convert datetime to string
         }
+
+# CustomExercise Model
+# Part 3: CustomExercise Model
+
+class CustomExercise(db.Model, SerializerMixin):
+    __tablename__ = 'custom_exercises'  # Label: Custom Exercises Table
+
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(80), nullable=False)
+    sets = db.Column(db.Integer, nullable=False)
+    reps = db.Column(db.Integer, nullable=False)
+    weight = db.Column(db.Float, nullable=False)
+    category = db.Column(db.String(80), nullable=False)
+    day = db.Column(db.String(20), nullable=False)
+    completed = db.Column(db.Boolean, default=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=True)
+
+    # The 'user' relationship is defined in the User model
+
+    def __repr__(self):
+        return f'<CustomExercise {self.name} by User {self.user_id}>'
+
+    def to_dict(self):
+        user = self.user.to_dict() if self.user else None
+        return {
+            'id': self.id,
+            'name': self.name,
+            'sets': self.sets,
+            'reps': self.reps,
+            'weight': self.weight,
+            'category': self.category,
+            'day': self.day,
+            'completed': self.completed,
+            'user_id': self.user_id,
+            'username': user['username'] if user else None,
+        }
+

@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useMemo } from 'react';
+import React, { useEffect, useState } from 'react';
 import '../styles/Report.css';
 
 const UserCard = ({ user }) => (
@@ -15,9 +15,12 @@ const UserCard = ({ user }) => (
   </div>
 );
 
-const ReportItem = ({ name, sets, reps, description }) => (
+const ReportItem = ({ name, sets, reps, weight, description }) => (
   <li className="report-item">
-    {name}: {sets && `${sets} sets x ${reps} reps`} {description && description}
+    {name}:
+    {sets && reps && ` ${sets} sets x ${reps} reps`}
+    {weight && ` at ${weight} kg`}
+    {description && ` - ${description}`}
   </li>
 );
 
@@ -35,9 +38,11 @@ const ReportCard = ({ title, items, type }) => (
     )}
   </div>
 );
+
 const Report = () => {
   const [workouts, setWorkouts] = useState([]);
   const [completedDiets, setCompletedDiets] = useState([]);
+  const [completedCustomExercises, setCompletedCustomExercises] = useState([]);
   const [users, setUsers] = useState([]);
   const [selectedUser, setSelectedUser] = useState(null);
   const usersURL = 'http://127.0.0.1:5555/users';
@@ -61,6 +66,7 @@ const Report = () => {
       }
     });
   }, []);
+
   const handleUserChange = (e) => {
     const userId = e.target.value;
     const user = users.find((user) => user.id === parseInt(userId));
@@ -69,6 +75,7 @@ const Report = () => {
 
   useEffect(() => {
     if (selectedUser) {
+      // Fetch Completed Workouts
       fetch(`http://127.0.0.1:5555/user_workout_assignments?user_id=${selectedUser.id}`)
         .then(response => response.json())
         .then(data => {
@@ -82,6 +89,7 @@ const Report = () => {
         })
         .catch(error => console.error('Error fetching workout assignments:', error));
 
+      // Fetch Completed Diets
       fetch(`http://127.0.0.1:5555/user_diet_assignments?user_id=${selectedUser.id}`)
         .then(response => response.json())
         .then(data => {
@@ -94,11 +102,21 @@ const Report = () => {
             });
         })
         .catch(error => console.error('Error fetching diet assignments:', error));
+
+      // Fetch Completed Custom Exercises
+      fetch(`http://127.0.0.1:5555/custom_exercises?user_id=${selectedUser.id}&completed=true`)
+        .then(response => response.json())
+        .then(data => {
+          setCompletedCustomExercises(data.exercises);
+        })
+        .catch(error => console.error('Error fetching custom exercises:', error));
     } else {
       setWorkouts([]);
       setCompletedDiets([]);
+      setCompletedCustomExercises([]);
     }
   }, [selectedUser]);
+
   return (
     <div className="report-container">
       <h1>User Info</h1>
@@ -114,11 +132,10 @@ const Report = () => {
         {selectedUser && <UserCard user={selectedUser} />}
         <ReportCard title="Completed Workouts" items={workouts} type="completed workouts" />
         <ReportCard title="Completed Diets" items={completedDiets} type="completed diets" />
+        <ReportCard title="Completed Custom Exercises" items={completedCustomExercises} type="completed custom exercises" />
       </div>
     </div>
   );
 };
 
 export default Report;
-
-
